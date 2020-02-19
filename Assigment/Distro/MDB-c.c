@@ -172,9 +172,17 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
  */
 ReviewNode *findMovieReview(char *title, char *studio, int year, ReviewNode *head)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function *********************************/
-    /***************************************************************************/
+    ReviewNode current;
+    current = head;
+    while(current.next !=  NULL){
+        if(strcmp(current.review.movie_title,title) == 0){
+            if(strcmp(current.review.movie_studio,studio)==0){
+                if(current.review.year == year){
+                    return head;
+                }
+            }
+        }
+    }
 
     return NULL;  // Remove this before you implement your solution!
 }
@@ -206,8 +214,17 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     /***************************************************************************/
     /**********  TODO: Complete this function **********************************/
     /***************************************************************************/
-
-    return NULL;  // Remove this before you implement your solution!
+    ReviewNode current;
+    current = head
+    
+    if(findMovieReview(title,studio,year,BO_total,score,head) != NULL){
+        printf("Sorry, movie alreadt exists");
+        return head;
+    }
+    ReviewNode newNode;        
+    newNode = newMovieReviewNode(title,studio,year,BO_total,score);
+    newNode.next = head;
+    return &newNode;  // Remove this before you implement your solution!
 }
 
 /**
@@ -219,11 +236,14 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
  */
 int countReviews(ReviewNode *head)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function **********************************/
-    /***************************************************************************/
+    int count = 0;
+    ReviewNode current;
+    current = head;
+    whule(current.next != NULL){
+        count++;
+    }
 
-    return 0;  // Remove this before you implement your solution
+    return count;  // Remove this before you implement your solution
 }
 
 /**
@@ -249,9 +269,12 @@ int countReviews(ReviewNode *head)
 void updateMovieReview(char *title, char *studio, int year, double BO_total, int score,
                        ReviewNode *head)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function *********************************/
-    /***************************************************************************/
+    ReviewNode match;
+    match = findMovieReview(title,studio,year,BO_total,score,head);
+    if(match != NULL){
+        match.review.BO_total = BO_total;
+        match.review.score = score;
+    }
 
 }
 
