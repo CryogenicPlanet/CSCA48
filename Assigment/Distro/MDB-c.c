@@ -174,14 +174,15 @@ ReviewNode *findMovieReview(char *title, char *studio, int year, ReviewNode *hea
 {
     ReviewNode current;
     current = head;
-    while(current.next !=  NULL){
-        if(strcmp(current.review.movie_title,title) == 0){
-            if(strcmp(current.review.movie_studio,studio)==0){
-                if(current.review.year == year){
+    while(current !=  NULL){
+        if(strcmp(current->review.movie_title,title) == 0){
+            if(strcmp(current->review.movie_studio,studio)==0){
+                if(current->review.year == year){
                     return head;
                 }
             }
         }
+    current = current->next;
     }
 
     return NULL;  // Remove this before you implement your solution!
@@ -223,7 +224,7 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     }
     ReviewNode newNode;        
     newNode = newMovieReviewNode(title,studio,year,BO_total,score);
-    newNode.next = head;
+    newNode->next = head;
     return &newNode;  // Remove this before you implement your solution!
 }
 
@@ -239,7 +240,7 @@ int countReviews(ReviewNode *head)
     int count = 0;
     ReviewNode current;
     current = head;
-    whule(current.next != NULL){
+    whule(current != NULL){
         count++;
     }
 
@@ -272,8 +273,8 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
     ReviewNode match;
     match = findMovieReview(title,studio,year,BO_total,score,head);
     if(match != NULL){
-        match.review.BO_total = BO_total;
-        match.review.score = score;
+        match->review.BO_total = BO_total;
+        match->review.score = score;
     }
 
 }
@@ -291,13 +292,58 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
  */
 ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *head)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function *********************************/
-    /***************************************************************************/
+    ReviewNode prev;
+    ReviewNode current;
+    ReviewNode next;
+    prev = NULL;
+    current = head;
+    next = current->next;
+    while (current!= NULL){
+        if(strcmp(current->review.movie_title,title) == 0){
+            if(strcmp(current->review.movie_studio,studio)==0){
+                if(current->review.year == year){
+                    if(prev != NULL){
+                        prev->next = next;
+                        free(current);
+                    } else{
+                        head = next;
+                        free(current);
+                    }
+                }
+            }
+        }
+    prev = current;
+    current = current->next;
+    }
 
-    return NULL;  // Remove this before implementing your solution
+    return head;  // Remove this before implementing your solution
 }
-
+double printReviews(ReviewNode *head, int condition,char *studio,int score){
+    double totalBoxOffice = 0.0;
+    ReviewNode current;
+    current = head;
+    while(current != NULL){
+        if(condition == 1){
+            if(strcmp(current->review.studio,studio) != 0){
+                current = current->next;
+            } // Checks if the studio is not equal and skips that node
+        }
+        if(condition == 2){
+            if(current->review.score < score){
+                current = current->next;
+            } // Check if the score is lesser than and then skips that node
+        }
+        printf("%s\n",current->review.movie_title);
+        printf(current->review.movie_studio);
+        printf("\n%d\n",current->year);
+        printf("%f\n",current->BO_total);
+        totalBoxOffice += current->BO_total;
+        printf("%d\n",current->score);
+        printf("**********************\n")
+        current = current->next;
+    }
+    return totalBoxOffice;
+}
 /**
  * Prints out all the reviews in the linked list and returns the sum of all the box office totals
  * for all stored movie reviews.
@@ -315,11 +361,8 @@ ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *h
  */
 double printMovieReviews(ReviewNode *head)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function *********************************/
-    /***************************************************************************/
-
-    return 0;  // Remove this before you implement your solution
+    
+    return printReviews(head,0,NULL,NULL);  // Remove this before you implement your solution
 }
 
 /**
@@ -345,7 +388,7 @@ double queryReviewsByStudio(char *studio, ReviewNode *head)
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
 
-    return 0;  // Remove this before you implement your solution
+    return printReviews(head,1,studio,NULL);  // Remove this before you implement your solution
 }
 
 /**
@@ -370,7 +413,7 @@ double queryReviewsByScore(int min_score, ReviewNode *head)
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
 
-    return 0;  // Remove this before you implement your solution
+    return printReviews(head,2,NULL,min_score);  // Remove this before you implement your solution
 }
 
 /**
@@ -385,8 +428,14 @@ ReviewNode *deleteReviewList(ReviewNode *head)
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-
-    return head;  // Remove this before you implement your solution
+    ReviewNode current = head;
+    ReviewNode next = current;
+    while(current != NULL){
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    return NULL;  // Remove this before you implement your solution
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
