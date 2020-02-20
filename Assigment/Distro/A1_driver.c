@@ -213,7 +213,7 @@ int main()
 
     // Test #7: Test the search function for an existing movie
     // Expects: The search function must return a pointer to the movie review matching the query
-    /*
+
     temp = findMovieReview("Alien", "20th Century Fox", 1979, MDB_head);
     if (temp == NULL)
     {
@@ -226,11 +226,11 @@ int main()
             strcmp("20th Century Fox", temp->review.movie_studio) != 0 || temp->review.year != 1979)
         {
             printf("Failed Test #7: the find function did not check all fields match\n");
-            printf(" Str cmp results: %d,%d\t Expected vs Real %d|%d\t %f|%f\t %d,%d",strcmp(temp->review.movie_title, "Alien"),strcmp(temp->review.movie_studio, "20th Century Fox"),1979,temp->review.year);
+            //printf(" Str cmp results: %d,%d\t Expected vs Real %d|%d\t %f|%f\t %d,%d",strcmp(temp->review.movie_title, "Alien"),strcmp(temp->review.movie_studio, "20th Century Fox"),1979,temp->review.year);
             return 1;
         }
     }
-    printf("Passed Test #7\n"); */
+    printf("Passed Test #7\n"); 
 
     // Test #8: Test the search function for a non-existing movie
     // Expects: The search function must return NULL
@@ -363,22 +363,22 @@ int main()
         return 1;
     }
     printf("Passed Test #14\n");
-// 
-//     // Test #15: Deleting a linked list
-//     // Expected: The list should be deleted and the MDB_head pointer should be NULL
-//     MDB_head = deleteReviewList(MDB_head);
-//     if (MDB_head != NULL)
-//     {
-//         printf("Failed Test #15: The list head pointer is not NULL\n");
-//         return 1;
-//     }
-//     else if (countReviews(MDB_head) != 0)
-//     {
-//         printf("Failed Test #15: countReviews() returns %d reviews still in the list\n",
-//                countReviews(MDB_head));
-//         return 1;
-//     }
-//     printf("Passed Test #15\n");
+
+    // Test #15: Deleting a linked list
+    // Expected: The list should be deleted and the MDB_head pointer should be NULL
+    MDB_head = deleteReviewList(MDB_head);
+    if (MDB_head != NULL)
+    {
+        printf("Failed Test #15: The list head pointer is not NULL\n");
+        return 1;
+    }
+    else if (countReviews(MDB_head) != 0)
+    {
+        printf("Failed Test #15: countReviews() returns %d reviews still in the list\n",
+               countReviews(MDB_head));
+        return 1;
+    }
+    printf("Passed Test #15\n");
 
     printf("Congratulations! your solution passed all the tests you un-commented!\n");
     printf(

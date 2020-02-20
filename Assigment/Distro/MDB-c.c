@@ -149,7 +149,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     review.score =  score;
     review.cast = NULL;
     ReviewNode *MovieReviewNode;
-    MovieReviewNode =(ReviewNode *)calloc(1, sizeof(ReviewNode));
+    MovieReviewNode = (ReviewNode *)calloc(1, sizeof(ReviewNode));
     MovieReviewNode->review = review;
     //printf("----\nFrom new Review function using review object\n %s,%s,%d\n---\n",review.movie_title,review.movie_studio,year);
     MovieReviewNode->next = NULL;
@@ -487,7 +487,7 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
         while(inner->next != NULL){
             next = inner->next;
             int diff = strcmp(inner->review.movie_title,next->review.movie_title);
-            printf("Difference %d between %s , %s\n",diff,inner->review.movie_title,next->review.movie_title);
+            //printf("Difference %d between %s , %s\n",diff,inner->review.movie_title,next->review.movie_title);
                 if (diff > 0){
                     if(prev != NULL){
                         prev->next = next;
@@ -532,10 +532,11 @@ void insertCastMember(char *title, char *studio, int year, ReviewNode *head, cha
     /***************************************************************************/
     ReviewNode *workedOn;
     workedOn = findMovieReview(title,studio,year, head);
-    CastList newMember;
-    strcpy(newMember.name, name);
-    newMember.next = workedOn->review.cast;
-    workedOn->review.cast = &newMember;
+    CastList *newMember;
+    newMember = (CastList *)calloc(1, sizeof(CastList));
+    strcpy(newMember->name, name);
+    newMember->next = workedOn->review.cast;
+    workedOn->review.cast = newMember;
 }
 
 /**
@@ -558,26 +559,22 @@ void insertCastMember(char *title, char *studio, int year, ReviewNode *head, cha
  * NOTE: The case of each character MUST match (the J must be a capital letter in the above example
  * for the match to count)
  */
-int countNames(MovieReview *movie, char *name)
+int countNames(MovieReview *movie, char *search)
 {
-  
-    CastList *cast = movie->cast;
-    
-    int count = 0;
-    bool test = true;
-    while (test)
-    {
-        char *p = strchr( name, '\n' );
-        if ( p ) *p = '\0';
-
-        p = strstr( cast->name, name );
-        printf("Checking substring with Actor %s and test name %s\n",cast->name,name);
-        if(p != NULL){
-            count++;
-            printf("%d\n",count);
-        }
-        test = false;
-    }
+  // -> => *(p).
+   int count = 0;
+   CastList *cast = movie->cast;
+//    printf("First Name %s\n",movie->cast->name);
+//    printf("Second Name %s\n",movie->cast->next->name);
+//    printf("Third Name %s\n",movie->cast->next->next->name);
+//    printf("Fourth Name %s\n",movie->cast->next->next->next->name);
+   while(cast != NULL){
+       if(strstr(cast->name,search)){
+           //printf("Added Count for name %s\n",cast->name);
+           count++;
+       }
+    cast = cast->next;
+   }
 
     
     return count;  // Remove this when you start working on your solution
