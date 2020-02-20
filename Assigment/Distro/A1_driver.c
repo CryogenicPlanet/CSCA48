@@ -318,46 +318,51 @@ int main()
     printf("Passed Test #12?\n");
     printf(" YOU have to check this prints (updated) Back to the Future with a score of 99:\n");
     queryReviewsByScore(95, MDB_head);
+    printf("Custom Sorting Test\n");
+    printf("Pre Sorted Reviews\n------------------------\n");
+    printMovieReviews(MDB_head);
+    temp = sortReviewsByTitle(MDB_head);
+    printf("--------------------\nPost Sorted Reviews\n");
+    printMovieReviews(temp);
+// 
+    // Test #13: Insert a cast member into a movie that initially has none
+    // Expected: We should find the cast member's name at the first entry of the linked
+    // list for the cast.
+    insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head, "Michael J. Fox");
+    temp = findMovieReview("Back to the Future", "Universal Studios", 1985, MDB_head);
+    if (temp == NULL)
+    {
+        printf("Failed test #13, the updated movie could not be found in the database!\n");
+        return 1;
+    }
+    if (temp->review.cast == NULL)
+    {
+        printf("Failed test #13, the movie still has an empty cast after inserting a name!\n");
+        return 1;
+    }
+    casting = temp->review.cast;
+    if (strcmp(&casting->name[0], "Michael J. Fox"))
+    {
+        printf("Failed test #13, the name in the cast list is not correct!\n");
+        return 1;
+    }
+    printf("Passed Test #13\n");
 
-// 
-//     // Test #13: Insert a cast member into a movie that initially has none
-//     // Expected: We should find the cast member's name at the first entry of the linked
-//     // list for the cast.
-//     insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head, "Michael J. Fox");
-//     temp = findMovieReview("Back to the Future", "Universal Studios", 1985, MDB_head);
-//     if (temp == NULL)
-//     {
-//         printf("Failed test #13, the updated movie could not be found in the database!\n");
-//         return 1;
-//     }
-//     if (temp->review.cast == NULL)
-//     {
-//         printf("Failed test #13, the movie still has an empty cast after inserting a name!\n");
-//         return 1;
-//     }
-//     casting = temp->review.cast;
-//     if (strcmp(&casting->name[0], "Michael J. Fox"))
-//     {
-//         printf("Failed test #13, the name in the cast list is not correct!\n");
-//         return 1;
-//     }
-//     printf("Passed Test #13\n");
-// 
-//     // Test #14: Insert more cast members and check the function that counts the number of
-//     // times a certain name appears in the cast list.
-//     insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head,
-//                      "Christopher Lloyd Fox");
-//     insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head, "Lea fox Thompson");
-//     insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head,
-//                      "Crispin GloverFox");
-//     count = countNames(&temp->review, "Fox");
-//     printf("The name 'Fox' appears in the cast list %d times\n", count);
-//     if (count != 3)
-//     {
-//         printf("Failed test #14, the count should be 3\n");
-//         return 1;
-//     }
-//     printf("Passed Test #14\n");
+    // Test #14: Insert more cast members and check the function that counts the number of
+    // times a certain name appears in the cast list.
+    insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head,
+                     "Christopher Lloyd Fox");
+    insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head, "Lea fox Thompson");
+    insertCastMember("Back to the Future", "Universal Studios", 1985, MDB_head,
+                     "Crispin GloverFox");
+    count = countNames(&temp->review, "Fox");
+    printf("The name 'Fox' appears in the cast list %d times\n", count);
+    if (count != 3)
+    {
+        printf("Failed test #14, the count should be 3\n");
+        return 1;
+    }
+    printf("Passed Test #14\n");
 // 
 //     // Test #15: Deleting a linked list
 //     // Expected: The list should be deleted and the MDB_head pointer should be NULL

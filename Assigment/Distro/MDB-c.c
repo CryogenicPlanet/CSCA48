@@ -87,7 +87,8 @@
 // Used to store information about the cast of a movie (Implement AFTER everything else)
 typedef struct castList_struct
 {
-        
+    char name[1024];
+    struct castList_struct* next;
 } CastList;
 
 // Used to store information about a movie
@@ -146,6 +147,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     review.year = year;
     review.BO_total = BO_total;
     review.score =  score;
+    review.cast = NULL;
     ReviewNode *MovieReviewNode;
     MovieReviewNode =(ReviewNode *)calloc(1, sizeof(ReviewNode));
     MovieReviewNode->review = review;
@@ -475,8 +477,33 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-    
-    return NULL;  // Remove this before you implement your solution
+    ReviewNode *outter;
+    outter = head;
+    ReviewNode *inner = NULL;
+    ReviewNode *next = NULL;
+    ReviewNode *prev = NULL;
+    while(outter != NULL){
+        inner = outter;
+        while(inner->next != NULL){
+            next = inner->next;
+            int diff = strcmp(inner->review.movie_title,next->review.movie_title);
+            printf("Difference %d between %s , %s\n",diff,inner->review.movie_title,next->review.movie_title);
+                if (diff > 0){
+                    if(prev != NULL){
+                        prev->next = next;
+                    } else {
+                         head = next;
+                    }
+                    inner->next =  next->next;
+                    next->next = inner;
+                } else {
+                prev = inner;
+                inner = inner->next;
+                }
+        }
+        outter = outter->next;
+    }
+    return head;  // Remove this before you implement your solution
 }
 
 /**
@@ -503,7 +530,12 @@ void insertCastMember(char *title, char *studio, int year, ReviewNode *head, cha
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-
+    ReviewNode *workedOn;
+    workedOn = findMovieReview(title,studio,year, head);
+    CastList newMember;
+    strcpy(newMember.name, name);
+    newMember.next = workedOn->review.cast;
+    workedOn->review.cast = &newMember;
 }
 
 /**
@@ -528,11 +560,26 @@ void insertCastMember(char *title, char *studio, int year, ReviewNode *head, cha
  */
 int countNames(MovieReview *movie, char *name)
 {
-    /***************************************************************************/
-    /**********  TODO: Complete this function *********************************/
-    /***************************************************************************/
+  
+    CastList *cast = movie->cast;
+    
+    int count = 0;
+    bool test = true;
+    while (test)
+    {
+        printf("Checking substring with Actor %s and test name %s\n",cast->name,name);
+        char *temp = strstr(cast->name,name);
+        printf("Substring: %s\n",temp);
+        if(temp != NULL){
+            count++;
+            printf("%d\n",count);
+        }
+        //cast = cast->next;
+        test = false;
+    }
 
-    return 0;  // Remove this when you start working on your solution
+    
+    return count;  // Remove this when you start working on your solution
 }
 
  //Prints out names of cast members for this movie - use it to help you debug
