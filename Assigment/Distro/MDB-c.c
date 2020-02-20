@@ -567,14 +567,15 @@ int countNames(MovieReview *movie, char *name)
     bool test = true;
     while (test)
     {
+        char *p = strchr( name, '\n' );
+        if ( p ) *p = '\0';
+
+        p = strstr( cast->name, name );
         printf("Checking substring with Actor %s and test name %s\n",cast->name,name);
-        char *temp = strstr(cast->name,name);
-        printf("Substring: %s\n",temp);
-        if(temp != NULL){
+        if(p != NULL){
             count++;
             printf("%d\n",count);
         }
-        //cast = cast->next;
         test = false;
     }
 
