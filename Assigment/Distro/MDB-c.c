@@ -97,7 +97,7 @@ typedef struct movieReview_struct
   char movie_title[1024];
   char movie_studio[1024];
   int year;
-  float BO_total;
+  double BO_total;
   int score;
   CastList *cast;
     
@@ -139,17 +139,19 @@ typedef struct reviewNode_struct
  */
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
+    
     MovieReview review;
-    review.movie_title = title;
-    review.movie_studio = studio;
+    strcpy(review.movie_title,title);
+    strcpy(review.movie_studio,studio);
     review.year = year;
     review.BO_total = BO_total;
     review.score =  score;
-    review.cast = cast;
-    newMovieReviewNode MovieReviewNode;
-    MovieReviewNode.review = review;
-    MovieReviewNode.next = NULL;
-    return &MovieReviewNode;
+    ReviewNode *MovieReviewNode;
+    MovieReviewNode =(ReviewNode *)calloc(1, sizeof(ReviewNode));
+    MovieReviewNode->review = review;
+    //printf("----\nFrom new Review function using review object\n %s,%s,%d\n---\n",review.movie_title,review.movie_studio,year);
+    MovieReviewNode->next = NULL;
+    return MovieReviewNode;
 }
 
 /**
@@ -172,12 +174,19 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
  */
 ReviewNode *findMovieReview(char *title, char *studio, int year, ReviewNode *head)
 {
-    ReviewNode current;
+    ReviewNode *current = NULL;
     current = head;
+    int checker = 0;
     while(current !=  NULL){
+        checker = 0;
         if(strcmp(current->review.movie_title,title) == 0){
+            checker += 1;
             if(strcmp(current->review.movie_studio,studio)==0){
+                checker += 1;
                 if(current->review.year == year){
+                    checker += 1;
+                    //printf("FOUND count : %d\n",checker);
+                    //checker = NULL;
                     return head;
                 }
             }
@@ -215,17 +224,16 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     /***************************************************************************/
     /**********  TODO: Complete this function **********************************/
     /***************************************************************************/
-    ReviewNode current;
-    current = head
     
-    if(findMovieReview(title,studio,year,BO_total,score,head) != NULL){
-        printf("Sorry, movie alreadt exists");
+    if(findMovieReview(title,studio,year,head) != NULL){
+        printf("Sorry, movie alreadt exists\n");
         return head;
     }
-    ReviewNode newNode;        
+    ReviewNode *newNode = NULL;        
     newNode = newMovieReviewNode(title,studio,year,BO_total,score);
     newNode->next = head;
-    return &newNode;  // Remove this before you implement your solution!
+    //printf("Just added %s\n",newNode->review.movie_title);
+    return newNode;  // Remove this before you implement your solution!
 }
 
 /**
@@ -238,10 +246,11 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
 int countReviews(ReviewNode *head)
 {
     int count = 0;
-    ReviewNode current;
+    ReviewNode *current;
     current = head;
-    whule(current != NULL){
+    while(current != NULL){
         count++;
+    current = current->next;
     }
 
     return count;  // Remove this before you implement your solution
@@ -270,8 +279,8 @@ int countReviews(ReviewNode *head)
 void updateMovieReview(char *title, char *studio, int year, double BO_total, int score,
                        ReviewNode *head)
 {
-    ReviewNode match;
-    match = findMovieReview(title,studio,year,BO_total,score,head);
+    ReviewNode *match;
+    match = findMovieReview(title,studio,year,head);
     if(match != NULL){
         match->review.BO_total = BO_total;
         match->review.score = score;
@@ -292,16 +301,21 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
  */
 ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *head)
 {
-    ReviewNode prev;
-    ReviewNode current;
-    ReviewNode next;
+    ReviewNode *prev;
+    ReviewNode *current;
+    ReviewNode *next;
     prev = NULL;
     current = head;
+    int checker = 0;
     next = current->next;
     while (current!= NULL){
+        checker = 0;
         if(strcmp(current->review.movie_title,title) == 0){
+            checker +=1;
             if(strcmp(current->review.movie_studio,studio)==0){
+                checker +=1;
                 if(current->review.year == year){
+                    checker +=1;
                     if(prev != NULL){
                         prev->next = next;
                         free(current);
@@ -320,11 +334,11 @@ ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *h
 }
 double printReviews(ReviewNode *head, int condition,char *studio,int score){
     double totalBoxOffice = 0.0;
-    ReviewNode current;
+    ReviewNode *current;
     current = head;
     while(current != NULL){
         if(condition == 1){
-            if(strcmp(current->review.studio,studio) != 0){
+            if(strcmp(current->review.movie_studio,studio) != 0){
                 current = current->next;
             } // Checks if the studio is not equal and skips that node
         }
@@ -335,11 +349,11 @@ double printReviews(ReviewNode *head, int condition,char *studio,int score){
         }
         printf("%s\n",current->review.movie_title);
         printf(current->review.movie_studio);
-        printf("\n%d\n",current->year);
-        printf("%f\n",current->BO_total);
-        totalBoxOffice += current->BO_total;
-        printf("%d\n",current->score);
-        printf("**********************\n")
+        printf("\n%d\n",current->review.year);
+        printf("%f\n",current->review.BO_total);
+        totalBoxOffice += current->review.BO_total;
+        printf("%d\n",current->review.score);
+        printf("**********************\n");
         current = current->next;
     }
     return totalBoxOffice;
@@ -361,8 +375,8 @@ double printReviews(ReviewNode *head, int condition,char *studio,int score){
  */
 double printMovieReviews(ReviewNode *head)
 {
-    
-    return printReviews(head,0,NULL,NULL);  // Remove this before you implement your solution
+    char* temp = NULL;
+    return printReviews(head,0,temp,-1);  // Remove this before you implement your solution
 }
 
 /**
@@ -388,7 +402,7 @@ double queryReviewsByStudio(char *studio, ReviewNode *head)
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
 
-    return printReviews(head,1,studio,NULL);  // Remove this before you implement your solution
+    return printReviews(head,1,studio,-1);  // Remove this before you implement your solution
 }
 
 /**
@@ -412,8 +426,8 @@ double queryReviewsByScore(int min_score, ReviewNode *head)
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-
-    return printReviews(head,2,NULL,min_score);  // Remove this before you implement your solution
+    char* temp = NULL;
+    return printReviews(head,2,temp,min_score);  // Remove this before you implement your solution
 }
 
 /**
@@ -428,8 +442,8 @@ ReviewNode *deleteReviewList(ReviewNode *head)
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-    ReviewNode current = head;
-    ReviewNode next = current;
+    ReviewNode *current = head;
+    ReviewNode *next = current;
     while(current != NULL){
         next = current->next;
         free(current);
@@ -516,13 +530,16 @@ int countNames(MovieReview *movie, char *name)
     return 0;  // Remove this when you start working on your solution
 }
 
-// Prints out names of cast members for this movie - use it to help you debug
-// UN-COMMENT this function AFTER you've implemented the cast list CDT, or
-// you will get compiler errors!
-
-// void printNames(ReviewNode *head)
-// {
-//     if (NULL == head || NULL == head->review.cast) return;
-//     printf("The cast for this movie are:\n");
-//     for (CastList *p = head->review.cast; NULL != p; p = p->next) printf("%s\n", p->name);
-// }
+ //Prints out names of cast members for this movie - use it to help you debug
+ //UN-COMMENT this function AFTER you've implemented the cast list CDT, or
+ //you will get compiler errors!
+ void printNames(ReviewNode *head){
+     printf("Temp\n");
+ }
+/*
+ void printNames(ReviewNode *head)
+ {
+     if (NULL == head || NULL == head->review.cast) return;
+    printf("The cast for this movie are:\n");
+     for (CastList *p = head->review.cast; NULL != p; p = p->next) printf("%s\n", p->name);
+ } */
