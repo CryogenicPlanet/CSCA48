@@ -185,9 +185,9 @@ ReviewNode *findMovieReview(char *title, char *studio, int year, ReviewNode *hea
                 checker += 1;
                 if(current->review.year == year){
                     checker += 1;
-                    //printf("FOUND count : %d\n",checker);
+                    //printf("FOUND %s,%s at %d,%d\n",title,studio,year,current->review.year);
                     //checker = NULL;
-                    return head;
+                    return current;
                 }
             }
         }
@@ -284,6 +284,7 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
     if(match != NULL){
         match->review.BO_total = BO_total;
         match->review.score = score;
+        //printf("Updating Match where match title %s\n ",match->review.movie_title);
     }
 
 }
@@ -309,6 +310,7 @@ ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *h
     int checker = 0;
     next = current->next;
     while (current!= NULL){
+        next = current->next;
         checker = 0;
         if(strcmp(current->review.movie_title,title) == 0){
             checker +=1;
@@ -319,15 +321,17 @@ ReviewNode *deleteMovieReview(char *title, char *studio, int year, ReviewNode *h
                     if(prev != NULL){
                         prev->next = next;
                         free(current);
+                        //return head;
                     } else{
                         head = next;
                         free(current);
+                        //eturn head;
                     }
                 }
             }
         }
     prev = current;
-    current = current->next;
+    current = next;
     }
 
     return head;  // Remove this before implementing your solution
@@ -347,6 +351,7 @@ double printReviews(ReviewNode *head, int condition,char *studio,int score){
                 current = current->next;
             } // Check if the score is lesser than and then skips that node
         }
+        if(current != NULL){
         printf("%s\n",current->review.movie_title);
         printf(current->review.movie_studio);
         printf("\n%d\n",current->review.year);
@@ -355,7 +360,7 @@ double printReviews(ReviewNode *head, int condition,char *studio,int score){
         printf("%d\n",current->review.score);
         printf("**********************\n");
         current = current->next;
-    }
+    }}
     return totalBoxOffice;
 }
 /**
@@ -470,7 +475,7 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
     /***************************************************************************/
     /**********  TODO: Complete this function *********************************/
     /***************************************************************************/
-
+    
     return NULL;  // Remove this before you implement your solution
 }
 

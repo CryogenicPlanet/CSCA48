@@ -213,6 +213,7 @@ int main()
 
     // Test #7: Test the search function for an existing movie
     // Expects: The search function must return a pointer to the movie review matching the query
+    /*
     temp = findMovieReview("Alien", "20th Century Fox", 1979, MDB_head);
     if (temp == NULL)
     {
@@ -229,92 +230,95 @@ int main()
             return 1;
         }
     }
-    printf("Passed Test #7\n");
-// 
-//     // Test #8: Test the search function for a non-existing movie
-//     // Expects: The search function must return NULL
-//     temp = findMovieReview("Alienized", "21st Century Fox", 2979, MDB_head);
-//     if (temp != NULL)
-//     {
-//         printf(
-//             "Failed Test #8: The search function returned a non-NULL node for a non-existing "
-//             "movie!\n");
-//         return 1;
-//     }
-//     printf("Passed Test #8\n");
-// 
-//     // Test #9: Test the update review function
-//     // Expected: The requested review must have its information updated
-//     updateMovieReview("Back to the Future", "Universal Studios", 1985, 5000000000, 99, MDB_head);
-//     temp = findMovieReview("Back to the Future", "Universal Studios", 1985, MDB_head);
-//     if (temp == NULL)
-//     {
-//         printf("Failed Test #9: Can't find updated review\n");
-//         return 1;
-//     }
-//     else
-//     {
-//         if (temp->review.BO_total != (double)5000000000 || temp->review.score != 99)
-//         {
-//             printf("Failed Test #9: Review information was not updated\n");
-//             return 1;
-//         }
-//     }
-//     printf("Passed Test #9\n");
-// 
-//     // Test #10: Test deletion of a review within the linked list (not head, not tail)
-//     // Expected: The review should be deleted, list length should be 3 after deletion
-//     temp = MDB_head;
-//     MDB_head = deleteMovieReview("Raiders of the Lost Ark", "20th Century Fox", 1981, MDB_head);
-//     length = countReviews(MDB_head);
-//     if (temp != MDB_head)
-//     {
-//         printf("Failed Test #10: The list head changed\n");
-//         return 1;
-//     }
-//     if (length != 3)
-//     {
-//         printf("Failed Test #10: The list has the wrong length\n");
-//         return 1;
-//     }
-//     temp = findMovieReview("Raiders of the Lost Ark", "20th Century Fox", 1981, MDB_head);
-//     if (temp != NULL)
-//     {
-//         printf(
-//             "Failed Test #10: The requested movie was found in the list - the wrong thing got "
-//             "deleted!\n");
-//         return 1;
-//     }
-//     printf("Passed Test #10\n");
-// 
-//     // Test #11: Test deletion of a review at the head of the list
-//     // Expected: The review should be deleted, list length should be 2.
-//     temp = MDB_head;
-//     MDB_head = deleteMovieReview("Alien", "20th Century Fox", 1978, MDB_head);
-//     length = countReviews(MDB_head);
-//     if (temp == MDB_head)
-//     {
-//         printf("Failed Test #11: The delete function did not remove the head node\n");
-//         return 1;
-//     }
-//     if (length != 2)
-//     {
-//         printf("Failed Test #11: The list length is wrong\n");
-//         return 1;
-//     }
-//     if (strcmp("Back to the Future", MDB_head->review.movie_title) != 0)
-//     {
-//         printf("Faied Test #11: The wrong node is at the head of the list\n");
-//         return 1;
-//     }
-//     printf("Passed Test #11\n");
-// 
-//     // Test #12: Query functions - queryReviewsByScore()
-//     // Expected: The function should print any reviews with a score equal to or greater than
-//     //  the query value
-//     printf("Passed Test #12?\n");
-//     printf(" YOU have to check this prints (updated) Back to the Future with a score of 99:\n");
-//     queryReviewsByScore(95, MDB_head);
+    printf("Passed Test #7\n"); */
+
+    // Test #8: Test the search function for a non-existing movie
+    // Expects: The search function must return NULL
+    temp = findMovieReview("Alienized", "21st Century Fox", 2979, MDB_head);
+    if (temp != NULL)
+    {
+        printf(
+            "Failed Test #8: The search function returned a non-NULL node for a non-existing "
+            "movie!\n");
+        return 1;
+    }
+    printf("Passed Test #8\n");
+    //printf("Printing All Reviews\n");
+    //printMovieReviews(MDB_head);
+    // Test #9: Test the update review function
+    // Expected: The requested review must have its information updated
+    updateMovieReview("Back to the Future", "Universal Studios", 1985, 5000000000, 99, MDB_head);
+    temp = findMovieReview("Back to the Future", "Universal Studios", 1985, MDB_head);
+    if (temp == NULL)
+    {
+        printf("Failed Test #9: Can't find updated review\n");
+        return 1;
+    }
+    else
+    {
+        if (temp->review.BO_total != (double)5000000000 || temp->review.score != 99)
+        {
+            printf("Failed Test #9: Review information was not updated\n");
+            return 1;
+        }
+    }
+    printf("Passed Test #9\n");
+    //printf("Printing All Reviews\n");
+    //printMovieReviews(MDB_head);
+    // Test #10: Test deletion of a review within the linked list (not head, not tail)
+    // Expected: The review should be deleted, list length should be 3 after deletion
+    temp = MDB_head;
+    MDB_head = deleteMovieReview("Raiders of the Lost Ark", "20th Century Fox", 1981, MDB_head);
+    length = countReviews(MDB_head);
+    if (temp != MDB_head)
+    {
+        printf("Failed Test #10: The list head changed\n");
+        return 1;
+    }
+    if (length != 3)
+    {
+        printf("Failed Test #10: The list has the wrong length\n");
+        return 1;
+    }
+    temp = findMovieReview("Raiders of the Lost Ark", "20th Century Fox", 1981, MDB_head);
+    if (temp != NULL)
+    {
+        printf(
+            "Failed Test #10: The requested movie was found in the list - the wrong thing got "
+            "deleted!\n");
+        return 1;
+    }
+    printf("Passed Test #10\n");
+
+    // Test #11: Test deletion of a review at the head of the list
+    // Expected: The review should be deleted, list length should be 2.
+    temp = MDB_head;
+    MDB_head = deleteMovieReview("Alien", "20th Century Fox", 1978, MDB_head);
+    length = countReviews(MDB_head);
+    if (temp == MDB_head)
+    {
+        printf("Failed Test #11: The delete function did not remove the head node\n");
+        return 1;
+    }
+    if (length != 2)
+    {
+        printf("Failed Test #11: The list length is wrong\n");
+        return 1;
+    }
+    if (strcmp("Back to the Future", MDB_head->review.movie_title) != 0)
+    {
+        printf("Faied Test #11: The wrong node is at the head of the list\n");
+        return 1;
+    }
+    printf("Passed Test #11\n");
+
+    // Test #12: Query functions - queryReviewsByScore()
+    // Expected: The function should print any reviews with a score equal to or greater than
+    //  the query value
+    printf("Passed Test #12?\n");
+    printf(" YOU have to check this prints (updated) Back to the Future with a score of 99:\n");
+    queryReviewsByScore(95, MDB_head);
+
 // 
 //     // Test #13: Insert a cast member into a movie that initially has none
 //     // Expected: We should find the cast member's name at the first entry of the linked
