@@ -44,7 +44,17 @@ int numberOfBacteriaInRange(Tissue tissue, int x, int y, Pattern pattern[], int 
 {
     /** CRUNCHIER: do this without looping over all the cells (again) (attacks are symmetric!) */
     int counter = 0;
-
+    int infected_health = tissue[x][y].health;
+    for(int health = 1;health < TISSUE_SIZE; health++){
+        for(int i = 0; i < num_patterns; i++){
+            if (infected_health > 0){
+                if(tissue[x + health*pattern[i][0]][y + health*pattern[i][1]].type == type && tissue[x + health*pattern[i][0]][y + health*pattern[i][1]].health >= health){
+                    counter++;
+                    infected_health = infected_health -1;
+                }
+            }
+        }
+    }
     return counter;
 }
 
@@ -86,8 +96,9 @@ int numberOfBacteriaInRange(Tissue tissue, int x, int y, Pattern pattern[], int 
 int numberOfCharlesInRange(Tissue tissue_sample, int x, int y)
 {
     /** TODO: implement this function, satisfying the description above. */
-
-    return 0;  // replace this with your implementation
+    Pattern charles_patterns[4] = {{2, 0}, {0, 2}, {-2, 0}, {0, -2}};
+    return numberOfBacteriaInRange(tissue_sample, x, y, charles_patterns, 4, C);
+    
 }
 
 /**
@@ -124,8 +135,8 @@ int numberOfCharlesInRange(Tissue tissue_sample, int x, int y)
 int numberOfSakinaInRange(Tissue tissue_sample, int x, int y)
 {
     /** TODO: implement this function, satisfying the description above. */
-
-    return 0;  // replace this with your implementation
+    Pattern sakina_patterns[4] = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    return numberOfBacteriaInRange(tissue_sample, x, y, sakina_patterns, 4, S);
 }
 
 /**
@@ -161,8 +172,28 @@ double testBacteria(Tissue tissue_sample)
      * CRUNCHY: Can you do this without using a loop in a loop?
      *              -> Think about how this 2D array is stored in memory...
      */
-
-    return 0;
+    double count = 0.0;
+    double killed = 0.0;
+    for(int i = 0;i < TISSUE_SIZE; i++){
+        for(int j = 0; j < TISSUE_SIZE; j++){
+            if(tissue_sample[i][j].type == I){
+                int health = tissue_sample[i][j].health;
+                health -= numberOfCharlesInRange(tissue_sample,i,j);
+                if(health > 0){
+                    health -= numberOfSakinaInRange(tissue_sample,i,j);
+                }
+                tissue_sample[i][j].health =health;
+                if(health <= 0){
+                    killed++;
+                    tissue_sample[i][j].type = _;
+                    tissue_sample[i][j].health = 0;
+                }
+                
+                count++;
+            }
+        }
+    }
+    return (killed/count)*100;
 }
 
 /**
