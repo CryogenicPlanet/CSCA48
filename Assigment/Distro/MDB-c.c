@@ -140,7 +140,6 @@ typedef struct reviewNode_struct
  */
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
-
     MovieReview review;
     strcpy(review.movie_title, title);
     strcpy(review.movie_studio, studio);
@@ -150,7 +149,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     }
     else
     {
-        printf("Invalid Year");
+        printf("Invalid Year\n");
         return NULL;
     }
     review.BO_total = BO_total;
@@ -160,7 +159,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     }
     else
     {
-        printf("Invalid Score");
+        printf("Invalid Score\n");
         return NULL;
     }
     review.cast = NULL;
@@ -252,6 +251,9 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     }
     ReviewNode *newNode = NULL;
     newNode = newMovieReviewNode(title, studio, year, BO_total, score);
+    if(newNode == NULL){
+        return NULL;
+    }
     newNode->next = head;
     //printf("Just added %s\n",newNode->review.movie_title);
     return newNode; // Remove this before you implement your solution!
@@ -308,6 +310,8 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
         match->review.BO_total = BO_total;
         match->review.score = score;
         //printf("Updating Match where match title %s\n ",match->review.movie_title);
+    } else {
+        printf("No node found to update\n");
     }
 }
 
@@ -376,14 +380,17 @@ double printReviews(ReviewNode *head, int condition, char *studio, int score)
         {
             if (strcmp(current->review.movie_studio, studio) != 0)
             {
+                //printf("Skipping Studio %s\n",current->review.movie_studio);
                 current = current->next;
+                continue;
             } // Checks if the studio is not equal and skips that node
         }
         if (condition == 2)
         {
             if (current->review.score < score)
-            {
+            { 
                 current = current->next;
+                continue;
             } // Check if the score is lesser than and then skips that node
         }
         if (current != NULL)
@@ -518,12 +525,16 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
     ReviewNode *inner = NULL;
     ReviewNode *next = NULL;
     ReviewNode *prev = NULL;
-    while (outter != NULL)
-    {
-        inner = outter;
-        while (inner->next != NULL)
+    while (outter->next != NULL)
+    {     
+        inner = head;
+        next = NULL;
+        prev = NULL;
+        //printf("New Pass with Inner: %s\n",inner->review.movie_title);
+        while ( inner->next != NULL)
         {
             next = inner->next;
+            //printf("New Node postions Prev: %s, Inner: %s, Next: %s\n",prev->review.movie_title,inner->review.movie_title,next->review.movie_title);
             int diff = strcmp(inner->review.movie_title, next->review.movie_title);
             //printf("Difference %d between %s , %s\n",diff,inner->review.movie_title,next->review.movie_title);
             if (diff > 0)
@@ -538,6 +549,7 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
                 }
                 inner->next = next->next;
                 next->next = inner;
+                prev = next;
             }
             else
             {
