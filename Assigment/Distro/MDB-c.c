@@ -140,7 +140,7 @@ typedef struct reviewNode_struct
  */
 bool validateData(int score, double BO_total, int year)
 {
-    if (0 > score || score > 100 || year < 1920 || 2999 > year || BO_total < 0)
+    if (0 > score || score > 100 || year < 1920 || 2999 < year || BO_total < 0)
     {
         return false;
     }
