@@ -247,14 +247,14 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
 
     if (findMovieReview(title, studio, year, head) != NULL)
     {
-        printf("Sorry, movie alreadt exists\n");
+        printf("Sorry, movie already exists\n");
         return head;
     }
     ReviewNode *newNode = NULL;
     newNode = newMovieReviewNode(title, studio, year, BO_total, score);
     if (newNode == NULL)
     {
-        return NULL;
+        return head;
     }
     newNode->next = head;
     //printf("Just added %s\n",newNode->review.movie_title);
@@ -305,7 +305,7 @@ int countReviews(ReviewNode *head)
 void updateMovieReview(char *title, char *studio, int year, double BO_total, int score,
                        ReviewNode *head)
 {
-    if (1920 > year || year > 2999 || score < 0 || score > 100){
+    if (score < 0 || score > 100){
         return;
     }
     ReviewNode *match;
@@ -537,13 +537,13 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
         inner = head;
         next = NULL;
         prev = NULL;
-        printf("New Pass with Inner: %s\n", inner->review.movie_title);
+        //printf("New Pass with Inner: %s\n", inner->review.movie_title);
         while (inner->next != NULL)
         {
             next = inner->next;
-            printf("New Node postions Prev: %s, Inner: %s, Next: %s\n", prev->review.movie_title, inner->review.movie_title, next->review.movie_title);
+            //printf("New Node postions Prev: %s, Inner: %s, Next: %s\n", prev->review.movie_title, inner->review.movie_title, next->review.movie_title);
             int diff = strcmp(inner->review.movie_title, next->review.movie_title);
-            printf("Difference %d between %s , %s\n", diff, inner->review.movie_title, next->review.movie_title);
+            //printf("Difference %d between %s , %s\n", diff, inner->review.movie_title, next->review.movie_title);
             if (diff > 0)
             {
                 if (prev != NULL)
@@ -569,7 +569,7 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
                 inner = inner->next;
             }
         }
-        printf("Outside first loop \n");
+        //printf("Outside first loop \n");
         if(prev == head){
             outter = head;
         }

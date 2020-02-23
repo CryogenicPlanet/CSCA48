@@ -254,7 +254,7 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     newNode = newMovieReviewNode(title, studio, year, BO_total, score);
     if (newNode == NULL)
     {
-        return NULL;
+        return head;
     }
     newNode->next = head;
     //printf("Just added %s\n",newNode->review.movie_title);
