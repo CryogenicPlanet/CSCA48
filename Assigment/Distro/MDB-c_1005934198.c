@@ -142,6 +142,9 @@ typedef struct reviewNode_struct
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
     MovieReview review;
+    if(strlen(title) > MAX_STR_LEN || strlen(studio) > MAX_STR_LEN){
+        return NULL;
+    }
     strcpy(review.movie_title, title);
     strcpy(review.movie_studio, studio);
     if (1920 < year && year < 2999)

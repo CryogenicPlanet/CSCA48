@@ -122,4 +122,24 @@ int main()
     printf("--------------------\nPost Sorted Reviews\n");
     printMovieReviews(temp);
     printf("Passed Sorting Test?\n");
+    
+    
+    // Test Case 8 Small Delete Node Case
+    int count = 0;
+    //printf("Before Insertion count: %d\n",countReviews(smallTest));
+    //printf("----------- Test 8 ----------- \n");
+    //printMovieReviews(temp);
+    smallTest = insertMovieReview("Civil War", "Marvel", 2016, 1.0, 87, temp);
+    count = countReviews(smallTest);
+    //printMovieReviews(smallTest);
+    //printf("Before Deletion count : %d\n",count);
+    smallTest = deleteMovieReview("Back to the Future", "Universal Studios", 1985,smallTest);
+    //printMovieReviews(smallTest);
+    count = countReviews(smallTest);
+    if(count != 2){
+        printf("Failed Test Case 8 Small Delete Node Test Case with %d instead of 2\n", count);
+        return 1;
+    }
+    printf("Passed Test Case 8\n");
+
 }
