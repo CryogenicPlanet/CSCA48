@@ -40,21 +40,21 @@ int main()
     // printMovieReviews(temp);
     // printf("Passed Duplicate Sorting Test?\n");
 
-    // // Test 3 Invalid Data Entry Test
-    // // Test 3 a) Invalid Score Input
-    // temp = insertMovieReview("Birds of Prey", "Warner Bros", 2018, 203630630.0, -1, MDB_head);
-    // if(temp != NULL){
-    //     printf("Failed Test 3 Invalid Score Input\n");
-    //     return 1;    
-    //     }
-    // printf("Passed Test 3 a) Invalid Score Input\n");
-    // // Test 3 b) Invalid Year Input
-    // temp = insertMovieReview("Birds of Prey", "Warner Bros", 100, 203630630.0, 78, MDB_head);
-    // if(temp != NULL){
-    //     printf("Failed Test 3 Invalid Year Input\n");
-    //     return 1;    
-    //     }
-    // printf("Passed Test 3 b) Invalid Year Input\n");
+    // Test 3 Invalid Data Entry Test
+    // Test 3 a) Invalid Score Input
+    temp = insertMovieReview("Birds of Prey", "Warner Bros", 2018, 203630630.0, -1, MDB_head);
+    if(temp != MDB_head){
+        printf("Failed Test 3 Invalid Score Input\n");
+        return 1;    
+        }
+    printf("Passed Test 3 a) Invalid Score Input\n");
+    // Test 3 b) Invalid Year Input
+    temp = insertMovieReview("Birds of Prey", "Warner Bros", 100, 203630630.0, 78, MDB_head);
+    if(temp != MDB_head){
+        printf("Failed Test 3 Invalid Year Input\n");
+        return 1;    
+        }
+    printf("Passed Test 3 b) Invalid Year Input\n");
 
 
     // printf("-----------------------\n All Reviews\n -----------------\n");

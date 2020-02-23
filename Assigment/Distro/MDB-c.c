@@ -138,30 +138,27 @@ typedef struct reviewNode_struct
  *              - score <- score
  *              - cast <- NULL
  */
+bool validateData(int score, double BO_total, int year)
+{
+    if (0 > score || score > 100 || year < 1920 || 2999 < year || BO_total < 0)
+    {
+        return false;
+    }
+    return true;
+}
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
     MovieReview review;
     strcpy(review.movie_title, title);
     strcpy(review.movie_studio, studio);
-    if (1920 < year && year < 2999)
+    if (validateData(score, BO_total, year) == false)
     {
-        review.year = year;
-    }
-    else
-    {
-        printf("Invalid Year\n");
+        printf("Invalid Data\n");
         return NULL;
     }
+    review.year = year;
     review.BO_total = BO_total;
-    if (0 < score && score < 100)
-    {
-        review.score = score;
-    }
-    else
-    {
-        printf("Invalid Score\n");
-        return NULL;
-    }
+    review.score = score;
     review.cast = NULL;
     ReviewNode *MovieReviewNode;
     MovieReviewNode = (ReviewNode *)calloc(1, sizeof(ReviewNode));
@@ -251,8 +248,9 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     }
     ReviewNode *newNode = NULL;
     newNode = newMovieReviewNode(title, studio, year, BO_total, score);
-    if(newNode == NULL){
-        return NULL;
+    if (newNode == NULL)
+    {
+        return head;
     }
     newNode->next = head;
     //printf("Just added %s\n",newNode->review.movie_title);
@@ -305,13 +303,22 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
 {
     ReviewNode *match;
     match = findMovieReview(title, studio, year, head);
-    if (match != NULL)
+    if (validateData(score, BO_total, match->review.year) == false)
     {
-        match->review.BO_total = BO_total;
-        match->review.score = score;
-        //printf("Updating Match where match title %s\n ",match->review.movie_title);
-    } else {
-        printf("No node found to update\n");
+        //printf("Invalid Data\n");
+    }
+    else
+    {
+        if (match != NULL)
+        {
+            match->review.BO_total = BO_total;
+            match->review.score = score;
+            //printf("Updating Match where match title %s\n ",match->review.movie_title);
+        }
+        else
+        {
+            //printf("No node found to update\n");
+        }
     }
 }
 
@@ -388,7 +395,7 @@ double printReviews(ReviewNode *head, int condition, char *studio, int score)
         if (condition == 2)
         {
             if (current->review.score < score)
-            { 
+            {
                 current = current->next;
                 continue;
             } // Check if the score is lesser than and then skips that node
@@ -526,12 +533,12 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
     ReviewNode *next = NULL;
     ReviewNode *prev = NULL;
     while (outter->next != NULL)
-    {     
+    {
         inner = head;
         next = NULL;
         prev = NULL;
         //printf("New Pass with Inner: %s\n",inner->review.movie_title);
-        while ( inner->next != NULL)
+        while (inner->next != NULL)
         {
             next = inner->next;
             //printf("New Node postions Prev: %s, Inner: %s, Next: %s\n",prev->review.movie_title,inner->review.movie_title,next->review.movie_title);
