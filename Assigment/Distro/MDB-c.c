@@ -138,6 +138,7 @@ typedef struct reviewNode_struct
  *              - score <- score
  *              - cast <- NULL
  */
+
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
     MovieReview review;
@@ -149,7 +150,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     }
     else
     {
-        printf("Invalid Year\n");
+        //printf("Invalid Year\n");
         return NULL;
     }
     review.BO_total = BO_total;
@@ -159,7 +160,7 @@ ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_to
     }
     else
     {
-        printf("Invalid Score\n");
+        //printf("Invalid Score\n");
         return NULL;
     }
     review.cast = NULL;
@@ -251,7 +252,8 @@ ReviewNode *insertMovieReview(char *title, char *studio, int year, double BO_tot
     }
     ReviewNode *newNode = NULL;
     newNode = newMovieReviewNode(title, studio, year, BO_total, score);
-    if(newNode == NULL){
+    if (newNode == NULL)
+    {
         return NULL;
     }
     newNode->next = head;
@@ -303,6 +305,9 @@ int countReviews(ReviewNode *head)
 void updateMovieReview(char *title, char *studio, int year, double BO_total, int score,
                        ReviewNode *head)
 {
+    if (1920 > year || year > 2999 || score < 0 || score > 100){
+        return;
+    }
     ReviewNode *match;
     match = findMovieReview(title, studio, year, head);
     if (match != NULL)
@@ -310,7 +315,9 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
         match->review.BO_total = BO_total;
         match->review.score = score;
         //printf("Updating Match where match title %s\n ",match->review.movie_title);
-    } else {
+    }
+    else
+    {
         printf("No node found to update\n");
     }
 }
@@ -388,7 +395,7 @@ double printReviews(ReviewNode *head, int condition, char *studio, int score)
         if (condition == 2)
         {
             if (current->review.score < score)
-            { 
+            {
                 current = current->next;
                 continue;
             } // Check if the score is lesser than and then skips that node
@@ -526,36 +533,45 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
     ReviewNode *next = NULL;
     ReviewNode *prev = NULL;
     while (outter->next != NULL)
-    {     
+    {
         inner = head;
         next = NULL;
         prev = NULL;
-        //printf("New Pass with Inner: %s\n",inner->review.movie_title);
-        while ( inner->next != NULL)
+        printf("New Pass with Inner: %s\n", inner->review.movie_title);
+        while (inner->next != NULL)
         {
             next = inner->next;
-            //printf("New Node postions Prev: %s, Inner: %s, Next: %s\n",prev->review.movie_title,inner->review.movie_title,next->review.movie_title);
+            printf("New Node postions Prev: %s, Inner: %s, Next: %s\n", prev->review.movie_title, inner->review.movie_title, next->review.movie_title);
             int diff = strcmp(inner->review.movie_title, next->review.movie_title);
-            //printf("Difference %d between %s , %s\n",diff,inner->review.movie_title,next->review.movie_title);
+            printf("Difference %d between %s , %s\n", diff, inner->review.movie_title, next->review.movie_title);
             if (diff > 0)
             {
                 if (prev != NULL)
                 {
                     prev->next = next;
+                    inner->next = next->next;
+                    next->next = inner;
+                    prev = next;
                 }
                 else
                 {
                     head = next;
+                    inner->next = head->next;
+                    head->next = inner;
+                    prev = head;
                 }
-                inner->next = next->next;
-                next->next = inner;
-                prev = next;
+
+                
             }
             else
             {
                 prev = inner;
                 inner = inner->next;
             }
+        }
+        printf("Outside first loop \n");
+        if(prev == head){
+            outter = head;
         }
         outter = outter->next;
     }

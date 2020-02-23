@@ -1,14 +1,14 @@
-#include "MDB-c.c"  // <--- This will import your code so we can
-                    //	use your solution to create a linked
-                    //	list of movie reviews for testing!
+#include "MDB-c.c" // <--- This will import your code so we can
+                   //	use your solution to create a linked
+                   //	list of movie reviews for testing!
 
 int main()
 {
     ReviewNode *MDB_head = NULL;
     ReviewNode *temp = NULL;
-    
+
     printf("Custom Tester Assuming you have passed all tests in A1_driver \n");
-    
+
     // Inserting Moives
     MDB_head = insertMovieReview("Alien", "20th Century Fox", 1979, 203630630.0, 85, MDB_head);
     MDB_head = insertMovieReview("Endgame", "Marvel", 2019, 1, 84, MDB_head);
@@ -26,9 +26,8 @@ int main()
 
     //Add Duplicate Title
 
-
     /// ONLY TEST 1 or 2 can be open at once both cannot be uncommented at the same time
-    
+
     MDB_head = insertMovieReview("Birds of Prey", "Warner Bros", 2019, 203630630.0, 78, MDB_head);
     MDB_head = insertMovieReview("Alien", "20th Century Fox", 1978, 203630630.0, 85, MDB_head);
 
@@ -45,17 +44,16 @@ int main()
     // temp = insertMovieReview("Birds of Prey", "Warner Bros", 2018, 203630630.0, -1, MDB_head);
     // if(temp != NULL){
     //     printf("Failed Test 3 Invalid Score Input\n");
-    //     return 1;    
+    //     return 1;
     //     }
     // printf("Passed Test 3 a) Invalid Score Input\n");
     // // Test 3 b) Invalid Year Input
     // temp = insertMovieReview("Birds of Prey", "Warner Bros", 100, 203630630.0, 78, MDB_head);
     // if(temp != NULL){
     //     printf("Failed Test 3 Invalid Year Input\n");
-    //     return 1;    
+    //     return 1;
     //     }
     // printf("Passed Test 3 b) Invalid Year Input\n");
-
 
     // printf("-----------------------\n All Reviews\n -----------------\n");
     // printMovieReviews(MDB_head);
@@ -89,5 +87,39 @@ int main()
     // }
     // printf("Passed Test 5? Check for error message above\n");
 
+    // // Test Case 6 Insert Case Test
 
+    // MovieReview *rv = NULL;
+    // rv = (MovieReview *)calloc(1, sizeof(MovieReview));
+    // strcpy(rv->movie_title, "Civil War");
+    // strcpy(rv->movie_studio, "Marvel");
+    // rv->year = 2019;
+    // CastList *t = NULL;
+    // t = (CastList *)calloc(1, sizeof(CastList));
+    // strcpy(t->name, "Arnold Nolde");
+    // CastList *tx = NULL;
+    // tx = (CastList *)calloc(1, sizeof(CastList));
+    // strcpy(tx->name, "Arnold Nolde");
+    // t->next = tx;
+    // rv->cast = t;
+
+    // int name_count = countNames(rv, "old");
+    // if (name_count != 2)
+    // {
+    //     printf("(TEST RESULT) Failed Test 6. Got %d instead of 2, since 'old' appears in Arnold Nolde and Arnold Nolde is inserted twice.\n", name_count);
+    //     return 1;
+    // }
+    // printf("(TEST RESULT) Passed Test 6.\n");
+
+    // // Test Case 7 Small Sort Test
+    // ReviewNode *smallTest = NULL;
+    // smallTest = insertMovieReview("Alien", "20th Century Fox", 1979, 203630630.0, 85, smallTest);
+    // smallTest = insertMovieReview("Back to the Future", "Universal Studios", 1985, 381189762.00, 85,
+    //                              smallTest);
+    // printf("Pre Sorted Reviews\n------------------------\n");
+    // printMovieReviews(smallTest);
+    // temp = sortReviewsByTitle(smallTest);
+    // printf("--------------------\nPost Sorted Reviews\n");
+    // printMovieReviews(temp);
+    // printf("Passed Sorting Test?\n");
 }
