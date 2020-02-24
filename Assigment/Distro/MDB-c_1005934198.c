@@ -321,7 +321,7 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
     }
     else
     {
-        printf("No node found to update\n");
+        printf("Sorry, no such movie exists at this point\n");
     }
 }
 
