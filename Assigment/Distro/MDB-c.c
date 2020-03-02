@@ -139,21 +139,12 @@ typedef struct reviewNode_struct
  *              - cast <- NULL
  */
 
+
 ReviewNode *newMovieReviewNode(char *title, char *studio, int year, double BO_total, int score)
 {
     MovieReview review;
     strcpy(review.movie_title, title);
     strcpy(review.movie_studio, studio);
-    if (1920 < year && year < 2999)
-    {
-        review.year = year;
-    }
-    else
-    {
-        //printf("Invalid Year\n");
-        return NULL;
-    }
-    review.BO_total = BO_total;
     if (0 < score && score < 100)
     {
         review.score = score;
@@ -310,15 +301,22 @@ void updateMovieReview(char *title, char *studio, int year, double BO_total, int
     }
     ReviewNode *match;
     match = findMovieReview(title, studio, year, head);
-    if (match != NULL)
+    if (validateData(score, BO_total, match->review.year) == false)
     {
-        match->review.BO_total = BO_total;
-        match->review.score = score;
-        //printf("Updating Match where match title %s\n ",match->review.movie_title);
+        //printf("Invalid Data\n");
     }
     else
     {
-        printf("No node found to update\n");
+        if (match != NULL)
+        {
+            match->review.BO_total = BO_total;
+            match->review.score = score;
+            //printf("Updating Match where match title %s\n ",match->review.movie_title);
+        }
+        else
+        {
+            //printf("No node found to update\n");
+        }
     }
 }
 
@@ -537,7 +535,6 @@ ReviewNode *sortReviewsByTitle(ReviewNode *head)
         inner = head;
         next = NULL;
         prev = NULL;
-        printf("New Pass with Inner: %s\n", inner->review.movie_title);
         while (inner->next != NULL)
         {
             next = inner->next;
