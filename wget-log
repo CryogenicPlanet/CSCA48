@@ -1,0 +1,59 @@
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:06--  https://inst-fs-yul-prod.inscloudgate.net/files/91b4b171-8b01-47c6-b481-2de169354f22/codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ0ZXIuYyIsImhvc3QiOiJxLnV0b3JvbnRvLmNhIiwiZXhwIjoxNTgzMTYzNjQwfQ.bWt-AOoYZmrRNnhzfcnSB076EZHYXaNXahjPhDy6x7qkaN7XytYZEwkB-aQOqxBUgpMQIfU0wUi131C4Qqvgeg
+Resolving inst-fs-yul-prod.inscloudgate.net (inst-fs-yul-prod.inscloudgate.net)... 15.222.129.154, 15.222.80.155
+Connecting to inst-fs-yul-prod.inscloudgate.net (inst-fs-yul-prod.inscloudgate.net)|15.222.129.154|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://q.utoronto.ca/login/oauth2/auth?redirect_uri=https%3A%2F%2Finst-fs-yul-prod.inscloudgate.net%2Foauth2%2Fresponse&scope=%2Fauth%2Fuserinfo&state=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6ImRlZmF1bHQifQ.eyJyZWRpcmVjdCI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ0ZXIuYz90b2tlbj1leUowZVhBaU9pSktWMVFpTENKaGJHY2lPaUpJVXpVeE1pSjkuZXlKcFlYUWlPakUxT0RNd056Y3lOREFzSW5WelpYSmZhV1FpT2lJeE1UZ3pOREF3TURBd01EQXlPRGd4TlRFaUxDSnlaWE52ZFhKalpTSTZJaTltYVd4bGN5ODVNV0kwWWpFM01TMDRZakF4TFRRM1l6WXRZalE0TVMweVpHVXhOamt6TlRSbU1qSXZZMjlrYjI1ZmIzSm5ZVzVwZW1WeVgzTjBZWEowWlhJdVl5SXNJbWh2YzNRaU9pSnhMblYwYjNKdmJuUnZMbU5oSWl3aVpYaHdJam94TlRnek1UWXpOalF3ZlEuYld0LUFPb1labXJSTm5oemZjblNCMDc2RVpIWVhhTlhhaGpQaER5Nng3cWthTjdYeXRZWkV3a0ItYVFPcXhCVWdwTVFJZlUwd1VpMTMxQzRRcXZnZWciLCJob3N0IjoicS51dG9yb250by5jYSIsInRlbmFudCI6ImNhbnZhcyIsImlhdCI6MTU4MzA5NzQyOX0.IAT8HDxxw51RW2FZQUhVPLF9MYBbyeCI9z19OsJ5z0kfh3at_xO4PeWJWIb4sYjbhkpxunX32U9sAyhA5UDErw&response_type=code&client_id=170000000000472 [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:11--  https://q.utoronto.ca/login/oauth2/auth?redirect_uri=https%3A%2F%2Finst-fs-yul-prod.inscloudgate.net%2Foauth2%2Fresponse&scope=%2Fauth%2Fuserinfo&state=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6ImRlZmF1bHQifQ.eyJyZWRpcmVjdCI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ0ZXIuYz90b2tlbj1leUowZVhBaU9pSktWMVFpTENKaGJHY2lPaUpJVXpVeE1pSjkuZXlKcFlYUWlPakUxT0RNd056Y3lOREFzSW5WelpYSmZhV1FpT2lJeE1UZ3pOREF3TURBd01EQXlPRGd4TlRFaUxDSnlaWE52ZFhKalpTSTZJaTltYVd4bGN5ODVNV0kwWWpFM01TMDRZakF4TFRRM1l6WXRZalE0TVMweVpHVXhOamt6TlRSbU1qSXZZMjlrYjI1ZmIzSm5ZVzVwZW1WeVgzTjBZWEowWlhJdVl5SXNJbWh2YzNRaU9pSnhMblYwYjNKdmJuUnZMbU5oSWl3aVpYaHdJam94TlRnek1UWXpOalF3ZlEuYld0LUFPb1labXJSTm5oemZjblNCMDc2RVpIWVhhTlhhaGpQaER5Nng3cWthTjdYeXRZWkV3a0ItYVFPcXhCVWdwTVFJZlUwd1VpMTMxQzRRcXZnZWciLCJob3N0IjoicS51dG9yb250by5jYSIsInRlbmFudCI6ImNhbnZhcyIsImlhdCI6MTU4MzA5NzQyOX0.IAT8HDxxw51RW2FZQUhVPLF9MYBbyeCI9z19OsJ5z0kfh3at_xO4PeWJWIb4sYjbhkpxunX32U9sAyhA5UDErw&response_type=code&client_id=170000000000472
+Resolving q.utoronto.ca (q.utoronto.ca)... 35.183.84.225, 15.222.203.197
+Connecting to q.utoronto.ca (q.utoronto.ca)|35.183.84.225|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://q.utoronto.ca/login [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:11--  https://q.utoronto.ca/login
+Reusing existing connection to q.utoronto.ca:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://q.utoronto.ca/login/saml [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:11--  https://q.utoronto.ca/login/saml
+Reusing existing connection to q.utoronto.ca:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://sso.canvaslms.com/delegated_auth_pass_through?canvas_host=q.utoronto.ca&target=https%3A%2F%2Fidpz.utorauth.utoronto.ca%2Fidp%2Fprofile%2FSAML2%2FRedirect%2FSSO%3FSAMLRequest%3DfVLLbsIwELz3KyLfjUMITbEAiYKqItESkbSHXirjLGApscHe9PX1dUIfcOFm7e7M7Mx66ERV7vmkxp1ewaEGh8FHVWrH28aI1FZzI5xyXIsKHEfJs8nDgkedkO%252BtQSNNSU4glxHCObCojCbBfDYir8mNXEdyE1PR6wsax70%252BFUW8puEgieNEiv61jEjwDNZ5zIh4Cg90roa5dig0%252BlIYhTTs0bCbR13eTXg4eCHBzPtQWmCL2iHuHWdMFfuvTo3GCu%252B2fRiNpiNF02HezEaVwJpdI7aCQlmQyLJsSYLJ79pTo11dgc3AvikJT6vFP%252F3hjLI0W6VZkwgJ0p%252BcbpUulN5ejmh9HHL8Ps9Tmi6znIyHDQ9vjdtxo%252Bfl%252FsSUj8LWEmsLHWmqVjMaslPI8HjlRy82n6WmVPIzuDO2Enh5l6aiCrppRzlaoZ0CjT6QsjTvUwsCYUS8OhA2Pkqe%252F6Xx1Tc%253D [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:11--  https://sso.canvaslms.com/delegated_auth_pass_through?canvas_host=q.utoronto.ca&target=https%3A%2F%2Fidpz.utorauth.utoronto.ca%2Fidp%2Fprofile%2FSAML2%2FRedirect%2FSSO%3FSAMLRequest%3DfVLLbsIwELz3KyLfjUMITbEAiYKqItESkbSHXirjLGApscHe9PX1dUIfcOFm7e7M7Mx66ERV7vmkxp1ewaEGh8FHVWrH28aI1FZzI5xyXIsKHEfJs8nDgkedkO%252BtQSNNSU4glxHCObCojCbBfDYir8mNXEdyE1PR6wsax70%252BFUW8puEgieNEiv61jEjwDNZ5zIh4Cg90roa5dig0%252BlIYhTTs0bCbR13eTXg4eCHBzPtQWmCL2iHuHWdMFfuvTo3GCu%252B2fRiNpiNF02HezEaVwJpdI7aCQlmQyLJsSYLJ79pTo11dgc3AvikJT6vFP%252F3hjLI0W6VZkwgJ0p%252BcbpUulN5ejmh9HHL8Ps9Tmi6znIyHDQ9vjdtxo%252Bfl%252FsSUj8LWEmsLHWmqVjMaslPI8HjlRy82n6WmVPIzuDO2Enh5l6aiCrppRzlaoZ0CjT6QsjTvUwsCYUS8OhA2Pkqe%252F6Xx1Tc%253D
+Resolving sso.canvaslms.com (sso.canvaslms.com)... 50.16.112.215, 52.44.82.138, 34.206.100.6
+Connecting to sso.canvaslms.com (sso.canvaslms.com)|50.16.112.215|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://idpz.utorauth.utoronto.ca/idp/profile/SAML2/Redirect/SSO?SAMLRequest=fVLLbsIwELz3KyLfjUMITbEAiYKqItESkbSHXirjLGApscHe9PX1dUIfcOFm7e7M7Mx66ERV7vmkxp1ewaEGh8FHVWrH28aI1FZzI5xyXIsKHEfJs8nDgkedkO%2BtQSNNSU4glxHCObCojCbBfDYir8mNXEdyE1PR6wsax70%2BFUW8puEgieNEiv61jEjwDNZ5zIh4Cg90roa5dig0%2BlIYhTTs0bCbR13eTXg4eCHBzPtQWmCL2iHuHWdMFfuvTo3GCu%2B2fRiNpiNF02HezEaVwJpdI7aCQlmQyLJsSYLJ79pTo11dgc3AvikJT6vFP%2F3hjLI0W6VZkwgJ0p%2BcbpUulN5ejmh9HHL8Ps9Tmi6znIyHDQ9vjdtxo%2Bfl%2FsSUj8LWEmsLHWmqVjMaslPI8HjlRy82n6WmVPIzuDO2Enh5l6aiCrppRzlaoZ0CjT6QsjTvUwsCYUS8OhA2Pkqe%2F6Xx1Tc%3D [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:12--  https://idpz.utorauth.utoronto.ca/idp/profile/SAML2/Redirect/SSO?SAMLRequest=fVLLbsIwELz3KyLfjUMITbEAiYKqItESkbSHXirjLGApscHe9PX1dUIfcOFm7e7M7Mx66ERV7vmkxp1ewaEGh8FHVWrH28aI1FZzI5xyXIsKHEfJs8nDgkedkO%2BtQSNNSU4glxHCObCojCbBfDYir8mNXEdyE1PR6wsax70%2BFUW8puEgieNEiv61jEjwDNZ5zIh4Cg90roa5dig0%2BlIYhTTs0bCbR13eTXg4eCHBzPtQWmCL2iHuHWdMFfuvTo3GCu%2B2fRiNpiNF02HezEaVwJpdI7aCQlmQyLJsSYLJ79pTo11dgc3AvikJT6vFP%2F3hjLI0W6VZkwgJ0p%2BcbpUulN5ejmh9HHL8Ps9Tmi6znIyHDQ9vjdtxo%2Bfl%2FsSUj8LWEmsLHWmqVjMaslPI8HjlRy82n6WmVPIzuDO2Enh5l6aiCrppRzlaoZ0CjT6QsjTvUwsCYUS8OhA2Pkqe%2F6Xx1Tc%3D
+Resolving idpz.utorauth.utoronto.ca (idpz.utorauth.utoronto.ca)... 128.100.132.113
+Connecting to idpz.utorauth.utoronto.ca (idpz.utorauth.utoronto.ca)|128.100.132.113|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: /idp/profile/SAML2/Redirect/SSO;jsessionid=E56F1EC3B3E3E003EF9F1DE1A0B11723?execution=e1s1 [following]
+The name is too long, 386 chars total.
+Trying to shorten...
+New name is codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ.
+--2020-03-01 16:17:12--  https://idpz.utorauth.utoronto.ca/idp/profile/SAML2/Redirect/SSO;jsessionid=E56F1EC3B3E3E003EF9F1DE1A0B11723?execution=e1s1
+Reusing existing connection to idpz.utorauth.utoronto.ca:443.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ’
+
+           codon_organ     [<=>                       ]       0  --.-KB/s               codon_organizer_starte     [ <=>                      ]  21.79K  --.-KB/s    in 0.002s  
+
+2020-03-01 16:17:12 (8.91 MB/s) - ‘codon_organizer_starter.c?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODMwNzcyNDAsInVzZXJfaWQiOiIxMTgzNDAwMDAwMDAyODgxNTEiLCJyZXNvdXJjZSI6Ii9maWxlcy85MWI0YjE3MS04YjAxLTQ3YzYtYjQ4MS0yZGUxNjkzNTRmMjIvY29kb25fb3JnYW5pemVyX3N0YXJ’ saved [22318]
+
