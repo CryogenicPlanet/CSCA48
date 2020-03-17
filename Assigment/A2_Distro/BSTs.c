@@ -125,17 +125,20 @@ BST_Node *BST_insert(BST_Node *root, BST_Node *new_node)
      ****/
     //printf("Calling Insert with new key %f\n",new_node->key);
     //BST_Node *head = root;
+    printf("\t\tInside Insert\n");
     if(root == NULL){
-        //printf("Root Null return\n");
+        printf("\t\t\tRoot Null return\n");
         return new_node;
         }
-    if(root->key == new_node->key){
+    if(fabs(root->key - new_node->key)< 1e-15){
         printf("Duplicate node requested (bar:index)=%d,%lf, it was ignored\n",new_node->bar,new_node->index);
         return root;
     }
     else if(root->key < new_node->key){
+        printf("\t\t\tright insert\n");
         root->right=  BST_insert(root->right,new_node);
     } else{
+        printf("\t\t\tleft insert\n");
         root->left =  BST_insert(root->left,new_node);
     }
     return root;
@@ -569,7 +572,7 @@ void BST_shiftFreq(BST_Node *root, char note_src[5], char note_dst[5])
 double newNodeFreq(double curFreq, int semitones){
     for(int i = 0; i < 100; i++){
         if(fabs(note_freq[i] -curFreq) < 1e-15){
-            if(i + semitones < 99 && i + semitones > 0){
+            if(i + semitones <= 99 && i + semitones >= 0){
                 return note_freq[i+semitones];
             }
         }
@@ -579,44 +582,66 @@ double newNodeFreq(double curFreq, int semitones){
 
 BST_Node *BST_createNewNodes(BST_Node *root,int semitones,double time_shift,BST_Node *newElements){
 
+    //printf("\tInside Create New Nodes\n");
+
     if(root->left != NULL){
-        BST_createNewNodes(root->left,semitones,time_shift,newElements);
+        //printf("\t\tInside left if\n");
+        newElements = BST_createNewNodes(root->left,semitones,time_shift,newElements);
     }
+    //printf("\tOutside left if\n");
     if(root != NULL) {
+        //printf("\t\tInside visit case \n");
        double newFreq = newNodeFreq(root->freq,semitones);
+        //printf("New Frequency %lf\n",newFreq);
        if(fabs(newFreq - (-1.0)< 1e-15)){
            // Checks if new frequency is -1 which is custom rejection case
-           return NULL;
+           return newElements;
        }
        int newBar = root->bar;
        double newIndex = root->index + time_shift;
        if(newIndex >= 1.0 || newIndex < 0.0){
            //Rejects if the newIndex is not between [0,1)
-           return NULL;
+           return newElements;
        }
        if(BST_search(root,newBar,newIndex) != NULL){
-           newIndex += 1e-05;
+           //Slight shift in Index to prevent duplicates
+           return newElements;
        }
        BST_Node *newNode = newBST_Node(newFreq,newBar,newIndex);
-    
+       if(newNode == NULL){
+           return newElements;
+       }
+       //printf("New Node with (bar:index) freq (%d:%lf) %lf\n",newNode->bar,newNode->index,newNode->freq);
        newElements = BST_insert(newElements,newNode);
+       //printf("\t\tInserted\n");
 
-    }
+    }   
+    //printf("\tOutside right if \n");
     if(root->right != NULL){
-        BST_createNewNodes(root->left,semitones,time_shift,newElements);
+        //printf("Inside right if\n");
+        newElements = BST_createNewNodes(root->right,semitones,time_shift,newElements);
+
+       
     }
+    //printf("\tPre Return\n");
+
     return newElements;
 }
 
 BST_Node *BST_InsertNewNodes(BST_Node *newElements, BST_Node *root){
-    if(root->left != NULL){
-        return BST_InsertNewNodes(newElements->left,root);
+    printf("\tInside Insert with New Element %d:%lf\n",newElements->bar,newElements->index);
+    if(newElements->left != NULL){
+        printf("\t\tInside left if\n");
+        root = BST_InsertNewNodes(newElements->left,root);
     }
-    if(root != NULL) {
+    if(newElements != NULL) {
+        printf("\t\tInside vist \n");
+        printf("\t\tBeing visted with New Element %d:%lf\n",newElements->bar,newElements->index);
         root = BST_insert(root,newElements);
     }
-    if(root->right != NULL){
-        return BST_InsertNewNodes(newElements->right,root);
+    if(newElements->right != NULL){
+        printf("\t\tInside right if \n");
+        root = BST_InsertNewNodes(newElements->right,root);
     }
     return root;
 }
@@ -696,10 +721,20 @@ BST_Node *BST_harmonize(BST_Node *root, int semitones, double time_shift)
     /*** TO DO:
      * Implement this function
      ****/
-    BST_Node *newHead = NULL;
-    newHead = BST_createNewNodes(root,semitones,time_shift,newHead);
+    //printf("Inside Harmonize \n");
+    //BST_Node *newHead;
+    BST_Node *newHead = (BST_Node *)calloc(1,sizeof(BST_Node));
+    newHead = NULL;
+    newHead = BST_createNewNodes(root,semitones,time_shift,NULL);
+    printf("--- New Nodes -- \n");
+    BST_inOrder(newHead,0);
+    printf("--- ----\n");
     if(newHead == NULL){
-        return NULL;
-    }  
+        //printf("newhead null\n");
+        return root;
+        
+    }
+    //printf("New head bar %d\n",newHead->bar);
+    //return root;  
     return BST_InsertNewNodes(newHead,root);
 }
