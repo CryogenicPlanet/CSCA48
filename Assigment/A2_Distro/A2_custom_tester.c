@@ -168,13 +168,13 @@ int main(int argc, char const *argv[])
     BST_inOrder(harmonized,0);
     printf("Passed Test 4? Harmonize Basic\n");
 
-    // Test 5 
-    // Double Harmonize
-    printf("--- Test 5 -- \n");
-    BST_Node *doubleHarmonize;
-    doubleHarmonize = BST_harmonize(harmonized,5.0,0.2);
-    BST_inOrder(doubleHarmonize,0);
-    printf("Passed Test 5? Double Harmonize\n");
+    // // Test 5 
+    // // Double Harmonize
+    // printf("--- Test 5 -- \n");
+    // BST_Node *doubleHarmonize;
+    // doubleHarmonize = BST_harmonize(harmonized,5.0,0.2);
+    // BST_inOrder(doubleHarmonize,0);
+    // printf("Passed Test 5? Double Harmonize\n");
 
     return 0;
 }
