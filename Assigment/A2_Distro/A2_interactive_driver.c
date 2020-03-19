@@ -28,6 +28,13 @@ void get_barindex(int *bar, double *index)
     scanf("%lf",index);
     getchar();
 }
+int BST_size(BST_Node *node) {
+    if(node == NULL) return 0;
+    
+    else {
+        return BST_size(node -> left) + BST_size(node -> right) + 1;
+    }
+}
 
 int main()
 {
@@ -58,7 +65,7 @@ int main()
       printf("8 - Shift notes\n");
       printf("9 - Harmonize\n");
       printf("10 - Delete BST and exit\n");
-      
+      printf("11 - Size of BST\n");
       scanf("%d",&choice);
       getchar();
 
@@ -164,6 +171,9 @@ int main()
 	scanf("%lf",&time_shift);
 	root=BST_harmonize(root,semitones,time_shift);
       }
+	  if(choice == 11){
+		  printf("BST Size %d\n",BST_size(root));
+	  }
       
     }	// Enf while (choice!=10)
 

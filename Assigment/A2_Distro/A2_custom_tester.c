@@ -3,8 +3,20 @@ A2 Custom Tester Project
 */
 #include <stdbool.h>
 #include<string.h>
-#include"BSTs.c"
+#include <stdlib.h>
+#include"BSTs_1005934198.c"
 
+
+double findHarmFreq(double curFreq, int semitones){
+    for(int i = 0; i < 100; i++){
+        if(fabs(note_freq[i] -curFreq) < 1e-15){
+            if(i + semitones <= 99 && i + semitones >= 0){
+                return note_freq[i+semitones];
+            }
+        }
+    }
+    return -1.0;
+}
 
 BST_Node * read_song(char * songName)
 {
@@ -78,7 +90,36 @@ bool inOrderShiftCheck(BST_Node *root,double freq_src){
     }
     return true;
 }
+bool checkShifted(BST_Node *root, BST_Node *harmonized, int semitones, double time_shift){
+    BST_Node *temp = BST_search(root,harmonized->bar,harmonized->index + time_shift);
+    double testFreq = findHarmFreq(temp->freq,semitones);
+    if(temp != NULL){
+        if(fabs(temp->freq - testFreq) < 1e-15){
+            return true;
+        }
+    }
+    return false;
+}
 
+bool harmonizeCheck(BST_Node *root, BST_Node *harmonized, int semitones, double time_shift){
+    if(harmonized == NULL){return false;}
+    if(harmonized->left != NULL){
+        if(harmonizeCheck(root,harmonized->left,semitones,time_shift) == false){
+            return false;
+        }
+    }
+    if(harmonized != NULL){
+        if((BST_search(root,harmonized->bar,harmonized->index)== NULL) && (checkShifted(root,harmonized,semitones,time_shift) ==false) && (checkShifted(root,harmonized,semitones,time_shift +  1e-05) == false)){
+            return false;
+        }
+    }
+    if(harmonized->right != NULL){
+         if(harmonizeCheck(root,harmonized->right,semitones,time_shift) == false){
+            return false;
+        }
+    }
+    return true;
+}
 int BST_size(BST_Node *node) {
     if(node == NULL) return 0;
     
@@ -89,12 +130,17 @@ int BST_size(BST_Node *node) {
 
 int main(int argc, char const *argv[])
 {
+    read_note_table();
+   
     printf("Use this test file under the assumption that you passed all test cases in A2_test_driver.c\n");
     printf("To change song pass the song file name as Argument 1\n");
-
-    read_note_table();
-    
-    char *inputSong = "./test_song.txt";
+    int printINOrder = 0;
+    printf("Do you want to print tree traversals?\n");
+    printf("0. Yes (default)\t");
+    printf("1. No \n");
+    scanf("%d",&printINOrder);
+    system("clear");
+    char *inputSong = "./stairway.txt";
     
     if(argv[1] != NULL){
         strcpy(inputSong,argv[1]);
@@ -120,61 +166,88 @@ int main(int argc, char const *argv[])
         printf("Failed to insert notes from %s song into binary tree \n",inputSong);
         return 1;
     }
-    BST_inOrder(root,0);
+    if(printINOrder == 0){BST_inOrder(root,0);}
     printf("Passed Test 2? - check message above to see if all notes were inserted\n");
 
 
    
 
-    // // Test 3
-    // // Shift Frequency
+    // Test 3
+    // Shift Frequency
 
-    // printf("--- Test 3 Shift Frequency --- \n");
+    printf("--- Test 3 Shift Frequency --- \n");
 
-    // char freq_src[5],freq_dst[5];
-    // printf("Choose frequency to change only 5 Characters\n");
-    // scanf("%s",freq_src);
-    // printf("Choose destination frequency\n");
-    // scanf("%s",freq_dst);
-    // BST_shiftFreq(root,freq_src,freq_dst);
-    // double freq;
-    // freq = -1.0; 
-    // for(int i = 0; i < 100;i++){
-    //     if(strcmp(freq_src,note_names[i]) == 0){
-    //         freq = note_freq[i];
-    //     }
-    // }
-    // if(inOrderShiftCheck(root,freq) == false){
-    //     printf("Failed Test 3, did not change all the frequencies\n");
-    //     return 1;
-    // }
-    // printf("Passed Test 3 Shifted Frequencies\n");
+    char freq_src[5],freq_dst[5];
+    printf("Choose frequency to change only 5 Characters\n");
+    scanf("%s",freq_src);
+    printf("Choose destination frequency\n");
+    scanf("%s",freq_dst);
+    BST_shiftFreq(root,freq_src,freq_dst);
+    double freq;
+    freq = -1.0; 
+    for(int i = 0; i < 100;i++){
+        if(strcmp(freq_src,note_names[i]) == 0){
+            freq = note_freq[i];
+        }
+    }
+    if(inOrderShiftCheck(root,freq) == false){
+        printf("Failed Test 3, did not change all the frequencies\n");
+        return 1;
+    }
+    printf("Passed Test 3 Shifted Frequencies\n");
 
     // Test 4
     // Harmonize
-    //int preCount;
-    //int postCount;
-    //preCount = BST_size(root);
-    //printf("preCount %d",preCount);4
     printf("--- Test 4 --- \n");
-
+    int semitones;
+    double timestep;
+    printf("Choose semitones \n");
+    scanf("%d",&semitones);
+    printf("Choose timestep\n");
+    scanf("%lf",&timestep);
+    int originalSize = BST_size(root);
     BST_Node *harmonized;
-    harmonized = BST_harmonize(root,4,0.1);
-    //postCount = BST_size(harmonized);
-    // if(preCount == postCount){
-    //     printf("Failed Test 4, did not change all frequencies\n");
-    //     return 1;
-    // }
-    BST_inOrder(harmonized,0);
-    printf("Passed Test 4? Harmonize Basic\n");
+    harmonized = BST_harmonize(root,semitones,timestep);
+    printf("--- Below is InOrder Traversal of Harmonized Output --- \n");
+    if(printINOrder == 0){BST_inOrder(harmonized,0);}
+    
+    int harmoinzedSize = BST_size(harmonized);
+    printf("--- Check that is has ~2x Elements as original\n Original %d, Harmonized %d ---\n",originalSize,harmoinzedSize);
+    if(harmonizeCheck(root,harmonized,5.0,0.2) == false){
+        printf("Failed Test 4 to harmonize all values correctly\n");
+        printf("Pls check the +- added to duplicate indexs, the code checks for + 1e-05 if you have a different value either change this file or your code\n");
+        return 1;
+    }
 
-    // // Test 5 
-    // // Double Harmonize
-    // printf("--- Test 5 -- \n");
-    // BST_Node *doubleHarmonize;
-    // doubleHarmonize = BST_harmonize(harmonized,5.0,0.2);
-    // BST_inOrder(doubleHarmonize,0);
-    // printf("Passed Test 5? Double Harmonize\n");
+
+    printf("Passed Test 4? Harmonize Basic, not a rigours check for Harmonize\n");
+
+
+    // Test 5 
+    // Double Harmonize
+    printf("--- Test 5 -- \n");
+    BST_Node *doubleHarmonize; 
+    printf("Choose semitones \n");
+    scanf("%d",&semitones);
+    printf("Choose timestep\n");
+    scanf("%lf",&timestep);  
+    doubleHarmonize = BST_harmonize(harmonized,semitones,timestep);
+    printf("--- Below is InOrder Traversal of Harmonized Output --- \n");
+    if(printINOrder == 0){BST_inOrder(doubleHarmonize,0);}
+    int doubleHarmonizedSize = BST_size(doubleHarmonize);
+    printf("--- Check that is has  Elements as original\n Original %d, Harmonized %d, Double Harmonized %d ---\n",originalSize,harmoinzedSize,doubleHarmonizedSize);
+    if(harmonizeCheck(root,harmonized,5.0,0.2) == false){
+        printf("Failed Test 4 to harmonize all values correctly\n");
+        printf("Pls check the +- added to duplicate indexs, the code checks for + 1e-05 if you have a different value either change this file or your code\n");
+        return 1;
+    }
+    printf("Passed Test 5? Double Harmonize, not a rigous check for Harmonize\n");
+
+
+    // Make Playlist Test
+    BST_makePlayList(doubleHarmonize);
+    play_notes(2);
+
 
     return 0;
 }
