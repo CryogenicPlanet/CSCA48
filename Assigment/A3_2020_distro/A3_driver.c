@@ -129,8 +129,10 @@ turkey
 gruyere cheese
 
  ****** Related with restrictions, 'quinoa', 'tomato juice', k_source=2, k_dest=2;
-sunflower seeds
 soymilk
+sunflower seeds
+quinoa
+turkey
 
  ****** substituting ingredient 'quinoa' in recipe
 fresh breadcrumbs

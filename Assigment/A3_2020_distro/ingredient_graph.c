@@ -102,18 +102,23 @@ intNode *insertInt(intNode *h, int x)
   return newNode;
 }
 
-intNode *deleteNode(intNode *head,int x){
+intNode *deleteNode(intNode *head, int x)
+{
   intNode *cur = head;
   intNode *prev = NULL;
   intNode *next;
   while (cur != NULL)
   {
-    if(cur->x == x){
-      if(prev == NULL){
+    if (cur->x == x)
+    {
+      if (prev == NULL)
+      {
         next = cur->next;
         free(cur);
         return next;
-      } else{
+      }
+      else
+      {
         prev->next = cur->next;
         free(cur);
         return head;
@@ -122,7 +127,7 @@ intNode *deleteNode(intNode *head,int x){
     prev = cur;
     cur = cur->next;
   }
-  return NULL; 
+  return NULL;
 }
 
 int searchInt(intNode *h, int x)
@@ -176,17 +181,19 @@ void load_ingredients(void)
   }
   fread(&AdjMat[0][0], n * n * sizeof(double), 1, f);
   fclose(f);
-  f = fopen("AdjMat.txt","w");
+  f = fopen("AdjMat.txt", "w");
   if (f == NULL)
   {
     printf("Can not open file with adjacency matrix. Please make sure it's in this directory\n");
     return;
   }
-  for(int i = 0; i < MAT_SIZE; i++){
-    for(int j = 0; j < MAT_SIZE; j++){
-      fprintf(f,"%f,",AdjMat[i][j]);
+  for (int i = 0; i < MAT_SIZE; i++)
+  {
+    for (int j = 0; j < MAT_SIZE; j++)
+    {
+      fprintf(f, "%f,", AdjMat[i][j]);
     }
-    fprintf(f,"\n");
+    fprintf(f, "\n");
   }
   fclose(f);
   /*
@@ -362,12 +369,14 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
     {
       if (searchInt(h, i) == 0)
       {
+        // Inserting if no duplicate
         h = insertInt(h, i);
-        //printf("Found Ingredient %s with index %d\n",ingredients[i],i);
-        if (k - 1 >= 0)
-        {
-          h = related_k_dist(h, ingredients[i], k - 1, dist + 1);
-        }
+      }
+      // Searching Node class even for duplicates if found at a closer k-distance
+      //printf("Found Ingredient %s with index %d at depth %d\n",ingredients[i],i,dist);
+      if (k - 1 >= 0)
+      {
+        h = related_k_dist(h, ingredients[i], k - 1, dist + 1);
       }
     }
   }
@@ -375,20 +384,32 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
   return h;
 }
 
-intNode *avoidIngredients(intNode * head,int avoidIndex,int k_avoid){
-  if(head == NULL){
+intNode *avoidIngredients(intNode *head, int avoidIndex, int k_avoid)
+{
+  //printf("Avoiding %s\n",ingredients[avoidIndex]);
+  if (head == NULL)
+  {
     return NULL;
   }
-  for(int i = 0; i <MAT_SIZE;i++){
-    if(AdjMat[avoidIndex][i] > 0){
-      if(searchInt(head,i) == 1){
-        printf("K avoid %d\n",k_avoid);
-        printf("To delete %s\n",ingredients[i]);
-        head = deleteNode(head,i);
-        if(k_avoid - 1 > 0){
-          head = avoidIngredients(head,avoidIndex,k_avoid -1);
-        }
+  if (searchInt(head, avoidIndex) == 1)
+  {
+    head = deleteNode(head, avoidIndex);
+  }
+  for (int i = 0; i < MAT_SIZE; i++)
+  {
+    if (AdjMat[avoidIndex][i] > 0)
+    {
+      if (searchInt(head, i) == 1)
+      {
+        //printf("To delete %s\n",ingredients[i]);
+        head = deleteNode(head, i);
+        // Delete if found
       }
+      if (k_avoid - 1 >= 0)
+      {
+        head = avoidIngredients(head, i, k_avoid - 1);
+      }
+      // Search children even if not found
     }
   }
   return head;
@@ -421,17 +442,80 @@ intNode *related_with_restrictions(char source_ingredient[MAX_STR_LEN], char avo
      * 
      */
 
-    /****
+  /****
      * TO DO:
      * Implement this function
      *****/
-    
-    intNode *head = NULL;
-    head = related_k_dist(head,source_ingredient,k_source,0);
-    int avoidIndex = ingredient_index(avoid);
-    head = avoidIngredients(head,avoidIndex,k_avoid);
 
-    return head;
+  intNode *head = NULL;
+  head = related_k_dist(head, source_ingredient, k_source, 0);
+  int avoidIndex = ingredient_index(avoid);
+  head = avoidIngredients(head, avoidIndex, k_avoid);
+
+  return head;
+}
+
+intNode *tree_to_list(intNode *head, int check_index, int dist)
+{
+  for (int i = 0; i < MAT_SIZE; i++)
+  {
+    if (AdjMat[check_index][i] > 0)
+    {
+      if (searchInt(head, i) == 0)
+      {
+
+        head = insertInt(head, i);
+        // Add if unique
+      }
+      if(dist < MAT_SIZE){
+        head = tree_to_list(head, i,dist + 1);
+      }
+
+      // Search children even if not found
+    }
+  }
+  return head;
+}
+
+int isNotInRecipe(int recipe[10], int newIndex)
+{
+  for (int i = 0; i < 10; i++)
+  {
+    if (recipe[i] == newIndex)
+    {
+      return 1; // False
+    }
+  }
+  return 0;
+}
+
+int substitue_runner(intNode *head, int to_check[10], int to_change_index, int curMax, int maxPos)
+{
+  intNode *cur = head;
+  int sum = 0;
+  while (cur != NULL)
+  {
+    sum = 0;
+    for (int i = 0; i < 10; i++)
+    {
+
+      if (to_check[i] != -1)
+      {
+        sum += AdjMat[cur->x][to_check[i]];
+      }
+    }
+    if (sum > curMax)
+    {
+      if (isNotInRecipe(to_check, cur->x) || cur->x != to_change_index)
+      {
+        //printf("New Max %s\n",ingredients[cur->x]);
+        curMax = sum;
+        maxPos = cur->x;
+      }
+    }
+    cur = cur->next;
+  }
+  return maxPos;
 }
 
 void substitute_ingredient(char recipe[10][MAX_STR_LEN], char to_change[MAX_STR_LEN])
@@ -465,4 +549,27 @@ void substitute_ingredient(char recipe[10][MAX_STR_LEN], char to_change[MAX_STR_
     * TO DO:
     * Complete this function!
     ******/
+  intNode *treeClass = NULL;
+  int to_change_index = ingredient_index(to_change);
+  treeClass = tree_to_list(treeClass, to_change_index,0); // Converts tree to list
+  //printf("Outside treeClass\n");
+  int toCheck[10];
+  //printf("-- TO Change Indices -- \n");
+  for (int i = 0; i < 10; i++)
+  {
+    toCheck[i] = ingredient_index(recipe[i]);
+    //printf("%d\n",toCheck[i]);
+  }
+
+  int newIndex = substitue_runner(treeClass, toCheck, to_change_index, 0, -1);
+  if(newIndex != -1){
+  
+  for (int i = 0; i < 10; i++)
+  {
+    if(toCheck[i] == to_change_index){
+      strcpy(recipe[i],ingredients[newIndex]);
+    }
+  }
+  
+  }
 }
