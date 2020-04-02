@@ -63,7 +63,7 @@
 #define MAX_STR_LEN 1024
 #ifndef __testing
 //#define MAT_SIZE 10 // Use the small graph
-#define MAT_SIZE 400	// Use full-size graph
+#define MAT_SIZE 400 // Use full-size graph
 #endif
 
 // The following are GLOBAL variables you can use
@@ -127,7 +127,7 @@ intNode *deleteNode(intNode *head, int x)
     prev = cur;
     cur = cur->next;
   }
-  return NULL;
+  return head;
 }
 
 int searchInt(intNode *h, int x)
@@ -173,7 +173,9 @@ void load_ingredients(void)
   if (n == 10)
     f = fopen("AdjMat_small.dat", "rb");
   else
+  {
     f = fopen("AdjMat_full.dat", "rb");
+  }
   if (f == NULL)
   {
     printf("Can not open file with adjacency matrix. Please make sure it's in this directory\n");
@@ -245,9 +247,11 @@ void print_ingredients(intNode *h)
   intNode *cur = h;
   while (cur != NULL)
   {
+    printf("Inside while \n");
     printf("%s\n", ingredients[cur->x]);
     cur = cur->next;
   }
+  
 }
 
 int ingredient_index(char source_ingredient[MAX_STR_LEN])
@@ -387,31 +391,47 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
 intNode *avoidIngredients(intNode *head, int avoidIndex, int k_avoid)
 {
   //printf("Avoiding %s\n",ingredients[avoidIndex]);
-  if (head == NULL)
-  {
-    return NULL;
+  // if (head == NULL)
+  // {
+  //   return NULL;
+  // }
+  // if (searchInt(head, avoidIndex) == 1)
+  // {
+  //   head = deleteNode(head, avoidIndex);
+  // }
+  // for (int i = 0; i < MAT_SIZE; i++)
+  // {
+  //   if (AdjMat[avoidIndex][i] > 0)
+  //   {
+  //     if (searchInt(head, i) == 1)
+  //     {
+  //       //printf("To delete %s\n",ingredients[i]);
+  //       head = deleteNode(head, i);
+  //       // Delete if found
+  //     }
+  //     if (k_avoid - 1 >= 0)
+  //     {
+  //       head = avoidIngredients(head, i, k_avoid - 1);
+  //     }
+  //     // Search children even if not found
+  //   }
+  // }
+  
+  // Previous Implementation does 400^400 iterations 
+
+  intNode * to_delete = related_k_dist(NULL,ingredients[avoidIndex],k_avoid,0);
+  if(to_delete == NULL){
+    return head;
   }
-  if (searchInt(head, avoidIndex) == 1)
+  intNode * cur = to_delete;
+  while (cur != NULL)
   {
-    head = deleteNode(head, avoidIndex);
-  }
-  for (int i = 0; i < MAT_SIZE; i++)
-  {
-    if (AdjMat[avoidIndex][i] > 0)
-    {
-      if (searchInt(head, i) == 1)
-      {
-        //printf("To delete %s\n",ingredients[i]);
-        head = deleteNode(head, i);
-        // Delete if found
-      }
-      if (k_avoid - 1 >= 0)
-      {
-        head = avoidIngredients(head, i, k_avoid - 1);
-      }
-      // Search children even if not found
+    if(searchInt(head,cur->x) == 1){ // Found element in list
+        head = deleteNode(head,cur->x);
     }
+    cur = cur->next;
   }
+  
   return head;
 }
 
@@ -449,7 +469,9 @@ intNode *related_with_restrictions(char source_ingredient[MAX_STR_LEN], char avo
 
   intNode *head = NULL;
   head = related_k_dist(head, source_ingredient, k_source, 0);
+  // Speed up Avoid Ingredients
   int avoidIndex = ingredient_index(avoid);
+//#pragma omp parallel num_threads(6)
   head = avoidIngredients(head, avoidIndex, k_avoid);
 
   return head;
@@ -459,20 +481,19 @@ intNode *tree_to_list(intNode *head, int check_index, int dist)
 {
   for (int i = 0; i < MAT_SIZE; i++)
   {
-    if (AdjMat[check_index][i] > 0)
+    // if (AdjMat[check_index][i] > 0)
+    // {
+    if (searchInt(head, i) == 0)
     {
-      if (searchInt(head, i) == 0)
-      {
-
-        head = insertInt(head, i);
-        // Add if unique
-      }
-      if(dist < MAT_SIZE){
-        head = tree_to_list(head, i,dist + 1);
-      }
-
-      // Search children even if not found
+      head = insertInt(head, i);
+      // Add if unique
     }
+    // if(dist < MAT_SIZE){
+    //   head = tree_to_list(head, i,dist + 1);
+    // }
+
+    // Search children even if not found
+    //}
   }
   return head;
 }
@@ -483,13 +504,14 @@ int isNotInRecipe(int recipe[10], int newIndex)
   {
     if (recipe[i] == newIndex)
     {
+      //printf("Found duplicate\n");
       return 1; // False
     }
   }
   return 0;
 }
 
-int substitue_runner(intNode *head, int to_check[10], int to_change_index, int curMax, int maxPos)
+int substitute_runner(intNode *head, int to_check[10], int to_change_index, int curMax, int maxPos)
 {
   intNode *cur = head;
   int sum = 0;
@@ -499,14 +521,14 @@ int substitue_runner(intNode *head, int to_check[10], int to_change_index, int c
     for (int i = 0; i < 10; i++)
     {
 
-      if (to_check[i] != -1)
+      if (to_check[i] != -1 && to_check[i] != to_change_index)
       {
         sum += AdjMat[cur->x][to_check[i]];
       }
     }
     if (sum > curMax)
     {
-      if (isNotInRecipe(to_check, cur->x) || cur->x != to_change_index)
+      if (isNotInRecipe(to_check, cur->x) == 0 && cur->x != to_change_index) // Should the second change be there or not?
       {
         //printf("New Max %s\n",ingredients[cur->x]);
         curMax = sum;
@@ -551,7 +573,7 @@ void substitute_ingredient(char recipe[10][MAX_STR_LEN], char to_change[MAX_STR_
     ******/
   intNode *treeClass = NULL;
   int to_change_index = ingredient_index(to_change);
-  treeClass = tree_to_list(treeClass, to_change_index,0); // Converts tree to list
+  treeClass = tree_to_list(treeClass, to_change_index, 0); // Converts tree to list
   //printf("Outside treeClass\n");
   int toCheck[10];
   //printf("-- TO Change Indices -- \n");
@@ -561,15 +583,26 @@ void substitute_ingredient(char recipe[10][MAX_STR_LEN], char to_change[MAX_STR_
     //printf("%d\n",toCheck[i]);
   }
 
-  int newIndex = substitue_runner(treeClass, toCheck, to_change_index, 0, -1);
-  if(newIndex != -1){
-  
-  for (int i = 0; i < 10; i++)
-  {
-    if(toCheck[i] == to_change_index){
-      strcpy(recipe[i],ingredients[newIndex]);
+  int newIndex = substitute_runner(treeClass, toCheck, to_change_index, 0, -1);
+  if(newIndex == -1){
+     for (int i = 0; i < 10; i++)
+    {
+      if (toCheck[i] == to_change_index)
+      {
+        strcpy(recipe[i], "");
+      }
     }
   }
-  
+  //printf("Outside substitute runner with new replacement %s\n",ingredients[newIndex]);
+  if (newIndex != -1)
+  {
+
+    for (int i = 0; i < 10; i++)
+    {
+      if (toCheck[i] == to_change_index)
+      {
+        strcpy(recipe[i], ingredients[newIndex]);
+      }
+    }
   }
 }

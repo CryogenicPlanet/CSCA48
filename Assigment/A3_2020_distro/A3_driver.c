@@ -36,6 +36,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include"ingredient_graph.c"
 
 int main()
@@ -44,7 +45,7 @@ int main()
     * Just a quick demo of how to set up the graph and call
     * the functions you are supposed to implement
     */
-   
+   clock_t begin = clock();
    intNode *head=NULL;
    char recipe[10][MAX_STR_LEN]={"fresh breadcrumbs",
 				 "artichoke hearts",
@@ -81,22 +82,29 @@ int main()
    head=related_with_restrictions("quinoa","artichoke hearts",0,0);
    print_ingredients(head);
    head=deleteList(head);
-
+  clock_t restrictions1_start = clock();
    printf("\n ****** Related with restrictions, 'quinoa', 'tomato juice', k_source=2, k_dest=0;\n");
    head=related_with_restrictions("quinoa","tomato juice",2,0);
    print_ingredients(head);
    head=deleteList(head);
-
+   clock_t restrictions2_start = clock();
    printf("\n ****** Related with restrictions, 'quinoa', 'tomato juice', k_source=2, k_dest=2;\n");
    head=related_with_restrictions("quinoa","tomato juice",2,2);
    print_ingredients(head);
    head=deleteList(head);
-
+  clock_t restrictions2_end = clock();
+  
    printf("\n ****** substituting ingredient 'quinoa' in recipe\n");
    substitute_ingredient(recipe,"quinoa");
    for (int i=0; i<10; i++)
      if (strlen(recipe[i])>0) printf("%s\n",recipe[i]);
-
+  clock_t end = clock();
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("\n----- TIME -----\n\n");
+  printf("Total time spent %lf\n",time_spent);
+  printf("Related with restrictions k_dest = 0 time spent %lf\n",((double)restrictions2_start - restrictions1_start)/ CLOCKS_PER_SEC);
+  printf("Related with restrictions k_dest = 2 time spent %lf\n",((double)restrictions2_end - restrictions2_start)/ CLOCKS_PER_SEC);
+  
    /* The OUTPUT of my solution to this assignment for the sample calls above is:
 
  ****** Related ingredients for quinoa:

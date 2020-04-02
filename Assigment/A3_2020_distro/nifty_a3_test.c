@@ -50,7 +50,10 @@ int main()
 
 int tests_passed= 0;
 intNode *checkAgainst = NULL;
-
+if(MAT_SIZE == 400){
+	printf("This test file works only for the 10x10 matrix\n");
+	return 1;
+}
 printf("\n\n\n ~~~~~~~~ The following are using the 10x10 matrix ~~~~~~~~~~\n\n\n");
 load_ingredients();
 
@@ -63,6 +66,7 @@ if(ingredient_index("gruyere cheese") == 7){
 	tests_passed++;
 }else{
 	printf("Test 1 Failed, ingredient_index(\"gruyere cheese\") returned %d instead of 7.\n", ingredient_index("gruyere cheese"));
+	return 1;
 }
 
 printf("_________________________________________________\n");
@@ -72,6 +76,7 @@ if(ingredient_index("onion") == -1){
 	tests_passed++;
 }else{
 	printf("Test 2 Failed, ingredient_index(\"onion\") returned %d instead of -1.\n", ingredient_index("onion"));
+	return 1;
 }
 
 printf("_________________________________________________\n");
@@ -88,11 +93,9 @@ printf("\nThis test should not print anything.\n");
 
 
 printf("_________________________________________________\n");
-printf("Test 5: Related ingredients to medium shrimp with k = 0 distance:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 5: Related ingredients to medium shrimp with k = 0 distance:\n");
 intNode *h = NULL;
 h = related_k_dist(h, "medium shrimp", 0, 0);
-print_ingredients(h);
 checkAgainst = NULL;
 char output[MAT_SIZE][MAX_STR_LEN] = {"prepared horseradish","artichoke hearts"};
 checkAgainst = insertIngredients(checkAgainst,output,2);
@@ -100,35 +103,33 @@ if(output_check(h,checkAgainst) == 1){
 	printf("Failed Test Case 5, Did not get desired output\n");
 	printf("\nThe linked list should contain:\n\nprepared horseradish\nartichoke hearts\n");
 	return 1;
-}
+} else {
+printf("\nPassed Test Case 5 \n");
 tests_passed++;
+}
 h = deleteList(h);
-printf("Passed Test Case 5 \n");
 printf("_________________________________________________\n");
 
-printf("Test 6: Related ingredients to turkey with k = 1 distance:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 6: Related ingredients to turkey with k = 1 distance:\n");
 h = NULL;
 h = related_k_dist(h, "turkey", 1, 0);
-print_ingredients(h);
 checkAgainst = NULL;
 char t6[MAT_SIZE][MAX_STR_LEN] = {"medium shrimp","artichoke hearts","turkey","gruyere cheese","quinoa"};
 checkAgainst = insertIngredients(checkAgainst,t6,5);
 if(output_check(h,checkAgainst) == 1){
-	printf("Failed Test Case 6, Did not get desired output\n");
+	printf("Failed Test Case 6, Did not get desired output. BRUH CRINGE\n");
 	printf("\nThe linked list should contain:\n\nartichoke hearts\nmedium shrimp\nturkey\ngruyere cheese\nquinoa\n");
 	return 1;
-}
+} else {
+printf("\nPassed Test Case 6\n");
 tests_passed++;
+}
 h = deleteList(h);
-printf("Passed Test Case 6\n");
 printf("_________________________________________________\n");
 
-printf("Test 7: Related ingredients to soymilk with k = 2 distance:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 7: Related ingredients to soymilk with k = 2 distance:\n");
 h = NULL;
 h = related_k_dist(h, "soymilk", 2, 0);
-print_ingredients(h);
 checkAgainst = NULL;
 char t7[MAT_SIZE][MAX_STR_LEN] = {"sunflower seeds","artichoke hearts","soymilk","quinoa"};
 checkAgainst = insertIngredients(checkAgainst,t7,4);
@@ -136,17 +137,16 @@ if(output_check(h,checkAgainst) == 1){
 	printf("Failed Test Case 7, Did not get desired output\n");
 	printf("\nThe linked list should contain:\n\nsunflower seeds\nsoymilk\nquinoa\nartichoke hearts\n");
 	return 1;
+} else {
+tests_passed++;;
+printf("\nPassed Test case 7\n");
 }
-tests_passed++;
 h = deleteList(h);
-printf("Passed Test case 7");
 printf("_________________________________________________\n");
 
-printf("Test 8: Related ingredients to tomato juice with k = 6 distance:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 8: Related ingredients to tomato juice with k = 6 distance:\n");
 h = NULL;
 h = related_k_dist(h, "tomato juice", 6, 0);
-print_ingredients(h);
 checkAgainst = NULL;
 char t8[MAT_SIZE][MAX_STR_LEN] = {"sunflower seeds","artichoke hearts","soymilk","quinoa","medium shrimp",
 "prepared horseradish","fresh breadcrumbs","gruyere cheese","tomato juice","turkey"};
@@ -155,10 +155,11 @@ if(output_check(h,checkAgainst) == 1){
 	printf("Failed Test Case 8, Did not get desired output\n");
 	printf("\nThe linked list should contain all ten foods.\n");
 	return 1;
-}
+} else {
 tests_passed++;
+printf("\nPassed Test Case 8\n");
+}
 h = deleteList(h);
-printf("Passed Test Case 8\n");
 printf("_________________________________________________\n");
 
 printf("Test 9: Related ingredients to item not in list (onion) with k = 3 distance:\n\n");
@@ -170,13 +171,13 @@ if(h == NULL){
 	tests_passed++;
 } else {
 	printf("Test 9 Failed, the link list was non empty.");
+	return 1;
 }
 h = deleteList(h);
 
 printf("_________________________________________________\n");
 
-printf("Test 10: Related ingredients to artichoke hearts with restrictions from medium shrimp k = 0 avoid k = 0:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 10: Related ingredients to artichoke hearts with restrictions from medium shrimp k = 0 avoid k = 0:\n");
 h = NULL;
 h = related_with_restrictions("artichoke hearts", "medium shrimp", 0, 0);
 checkAgainst = NULL;
@@ -186,11 +187,11 @@ if(output_check(h,checkAgainst) == 1){
 	printf("Failed Test Case 10, Did not get desired output\n");
 	printf("\nThe linked list should contain:\n\ngruyere cheese\nquinoa\nturkey\n");
 	return 1;
-}
+} else {
 tests_passed++;
-print_ingredients(h);
+printf("\nPassed Test 10\n");
+}
 h = deleteList(h);
-printf("Passed Test 10\n");
 printf("_________________________________________________\n");
 
 printf("Test 11: Related ingredients to soymilk with restrictions from quinoa k = 2 avoid k = 1:\n\n");
@@ -200,7 +201,9 @@ if(h == NULL){
 	printf("Test 11 Failed. just kidding! you passed test 11 no problem.\n");
 	tests_passed++;
 } else {
+	print_ingredients(h);
 	printf("Test 11 Failed, the link list was non empty.");
+	return 1;
 }
 h = deleteList(h);
 
@@ -215,15 +218,14 @@ if(h == NULL){
 	tests_passed++;
 } else {
 	printf("Test 12 Failed, the link list was non empty.");
+	return 1;
 }
 h = deleteList(h);
 printf("_________________________________________________\n");
 
-printf("Test 13: Related ingredients to tomato juice with restrictions from soymilk k = 3 avoid k = 2:\n\n");
-printf("Your program returned the following linked list:\n\n");
+printf("Test 13: Related ingredients to tomato juice with restrictions from soymilk k = 3 avoid k = 2:\n");
 h = NULL;
 h = related_with_restrictions("tomato juice", "soymilk", 3, 2);
-print_ingredients(h);
 checkAgainst = NULL;
 char t13[MAT_SIZE][MAX_STR_LEN] = {"medium shrimp",
 "prepared horseradish","fresh breadcrumbs","gruyere cheese","tomato juice","turkey"};
@@ -232,16 +234,284 @@ if(output_check(h,checkAgainst) == 1){
 	printf("Failed Test Case 13, Did not get desired output\n");
 	printf("\nThe linked list should contain:\n\ngruyere cheese\ntomato juice\nfresh breadcrumbs\nmedium shrimp\nprepared horseradish\nturkey\n");
 	return 1;
-}
+} else {
 tests_passed++;
+printf("\nPassed Test Case 13\n");
+}
 h = deleteList(h);
-printf("Passed Test Case 13\n");
+printf("_________________________________________________\n");
+
+
+printf("Test 14: Substitute ingredient tomato juice in recipe (length 2) (also testing random blank space placement):\n\n");
+char recipe1[10][MAX_STR_LEN]={"fresh breadcrumbs",
+				 "tomato juice",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "soymilk",
+				 "",
+				 "",
+				 ""};
+substitute_ingredient(recipe1, "tomato juice");
+
+int test = 0;
+int quack = 0;
+for(quack = 0; quack < 7; quack++){
+	if(quack == 0){
+		if(strcmp(recipe1[quack], "fresh breadcrumbs") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 1){
+		if(strcmp(recipe1[quack], "gruyere cheese") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 6){
+		if(strcmp(recipe1[quack], "soymilk") != 0){
+			test = 1;
+		}
+	}		
+}
+if(test == 1){
+	for (int i=0; i<10; i++)
+     if (strlen(recipe1[i])>0) printf("%s\n",recipe1[i]);
+	printf("Test 14 failed.\n");
+	return 1;
+}else{
+	printf("Test 14 passed\n");
+	tests_passed++;
+}
+printf("_________________________________________________\n");
+
+printf("Test 15: Substitute ingredient tomato juice in recipe (length 3, check for duplicates):\n\n");
+char recipe2[10][MAX_STR_LEN]={"fresh breadcrumbs",
+				 "tomato juice",
+				 "gruyere cheese",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "",
+				 ""};
+substitute_ingredient(recipe2, "tomato juice");
+
+test = 0;
+quack = 0;
+for(quack = 0; quack < 3; quack++){
+	if(quack == 0){
+		if(strcmp(recipe2[quack], "fresh breadcrumbs") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 1){
+		if(strcmp(recipe2[quack], "artichoke hearts") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 2){
+		if(strcmp(recipe2[quack], "gruyere cheese") != 0){
+			test = 1;
+		}
+	}		
+}
+if(test == 1){
+	for (int i=0; i<10; i++)
+     if (strlen(recipe2[i])>0) printf("%s\n",recipe2[i]);
+	printf("Test 15 failed.\n");
+	return 1;
+}else{
+	printf("Test 15 passed\n");
+	tests_passed++;
+}
+
+printf("_________________________________________________\n");
+
+printf("Test 16: Substitute ingredient turkey in recipe (length 2, checking case where neighbours have equal weight):\n\n");
+char recipe3[10][MAX_STR_LEN]={"medium shrimp",
+				 "turkey",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "",
+				 "",
+				 ""};
+substitute_ingredient(recipe3, "turkey");
+
+test = 0;
+quack = 0;
+for(quack = 0; quack < 3; quack++){
+	if(quack == 0){
+		if(strcmp(recipe3[quack], "medium shrimp") == 0){
+			test = 1;
+		}
+	}
+	if(quack == 1){
+		if((strcmp(recipe3[quack], "artichoke hearts") == 0) || (strcmp(recipe3[quack], "prepared horseradish") == 0)){
+			test++;
+		}
+	}			
+}
+if(test != 2){
+	printf("Test 16 failed.\n");
+	return 1;
+}else{
+	printf("Test 16 passed\n");
+	tests_passed++;
+}
+
+printf("_________________________________________________\n");
+
+printf("Test 17: Substitute ingredient not in recipe in recipe (length 6):\n\n");
+char recipe4[10][MAX_STR_LEN]={"medium shrimp",
+				 "turkey",
+				 "prepared horseradish",
+				 "gruyere cheese",
+				 "quinoa",
+				 "sunflower seeds",
+				 "",
+				 "",
+				 "",
+				 ""};
+substitute_ingredient(recipe4, "pepega");
+
+test = 0;
+quack = 0;
+for(quack = 0; quack < 6; quack++){
+	if(quack == 0){
+		if(strcmp(recipe4[quack], "medium shrimp") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 1){
+		if(strcmp(recipe4[quack], "turkey") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 2){
+		if(strcmp(recipe4[quack], "prepared horseradish") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 3){
+		if(strcmp(recipe4[quack], "gruyere cheese") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 4){
+		if(strcmp(recipe4[quack], "quinoa") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 5){
+		if(strcmp(recipe4[quack], "sunflower seeds") != 0){
+			test = 1;
+		}
+	}	
+}
+if(test == 1){
+	printf("Test 17 failed.\n");
+	return 1;
+}else{
+	printf("Test 17 passed. *que epic victory music*\n");
+	tests_passed++;
+}
+
+printf("_________________________________________________\n");
+
+printf("Test 18: Substitute ingredient into full recipe (length 10):\n\n");
+char recipe5[10][MAX_STR_LEN]={"medium shrimp",
+				 "turkey",
+				 "prepared horseradish",
+				 "gruyere cheese",
+				 "quinoa",
+				 "sunflower seeds",
+				 "artichoke hearts",
+				 "soymilk",
+				 "fresh breadcrumbs",
+				 "tomato juice"};
+substitute_ingredient(recipe5, "soymilk");
+
+test = 0;
+quack = 0;
+for(quack = 0; quack < 10; quack++){
+	if(quack == 0){
+		if(strcmp(recipe5[quack], "medium shrimp") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 1){
+		if(strcmp(recipe5[quack], "turkey") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 2){
+		if(strcmp(recipe5[quack], "prepared horseradish") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 3){
+		if(strcmp(recipe5[quack], "gruyere cheese") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 4){
+		if(strcmp(recipe5[quack], "quinoa") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 5){
+		if(strcmp(recipe5[quack], "sunflower seeds") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 6){
+		if(strcmp(recipe5[quack], "artichoke hearts") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 7){
+		if(strcmp(recipe5[quack], "") != 0){
+			test = 1;
+		}
+	}
+	if(quack == 8){
+		if(strcmp(recipe5[quack], "fresh breadcrumbs") != 0){
+			test = 1;
+		}
+	}	
+	if(quack == 9){
+		if(strcmp(recipe5[quack], "tomato juice") != 0){
+			test = 1;
+		}
+	}	
+}
+
+if(test == 1){
+	for (int i=0; i<10; i++)
+     if (strlen(recipe5[i])>0) printf("%s\n",recipe5[i]);
+	printf("Test 18 failed.\n");
+	return 1;
+}else{
+	printf("boom. test 18 passed. this is great!\n");
+	tests_passed++;
+}
 printf("_________________________________________________\n");
 
 
 
+
+
 printf("\n\n     =========== SUMMARY ============\n\n");
-printf("     Passed %d/11 automatically ran tests.\n", tests_passed);
-printf("     make sure test cases 3 and 4 output, they are not autochecked. also wash your hands.\n\n\n");
+if(tests_passed < 16){
+printf("    oof. you only passed %d/16 automatically ran tests.\n", tests_passed);
+} else {
+printf("     THIS ABSOLUTE CHAD JUSTED PASSED ALL 16 AUTOMATICALLY RAN TESTS   \n\n");
+}
+printf("     Make sure test cases 3 and 4 output, they are not autochecked. also wash your hands.\n\n\n");
   return 0;   
 }
